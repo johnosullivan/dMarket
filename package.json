@@ -28,6 +28,8 @@
     "ionicons": "3.0.0",
     "rxjs": "5.5.2",
     "sw-toolbox": "3.6.0",
+    "web3": "^0.20.4",
+    "web3-eth-accounts": "^1.0.0-beta.28",
     "zone.js": "0.8.18"
   },
   "devDependencies": {
