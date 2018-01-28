@@ -15,21 +15,40 @@ export class HomePage {
 
   balance:string;
   user:any;
+  tempuser:any;
+  transWatching:any;
 
   constructor(private touchId: TouchID,private storage: Storage,public navCtrl: NavController,public web3Provider:Web3Provider) {
-    this.balance = "ETH: 0 dMT: 0";
-    this.storage.get('account').then((val) => { this.user = val; });
+
+    this.balance = "";
+    this.tempuser = "";
+
     this.touchId.isAvailable().then(
       res => console.log('TouchID is available!'),
       err => console.error('TouchID is not available', err)
     );
+
   }
 
-  create() {
-    console.log("Creating ETH user");
+  ionViewWillLeave() {
+
+  }
+
+  set() {
+    console.log("Set ETH User");
     var web3account = this.web3Provider.getWeb3Account();
-    this.user = web3account.create();
-    this.storage.set('account', this.user);
+    var data = this.tempuser.split(",");
+    var temp = { address: data[0],privateKey: data[1] };
+    this.user = temp;
+    this.web3Provider.setUser(this.user.address);
+    this.storage.set('account', temp);
+  }
+
+  sendDMT() {
+    var publicAddress = this.user.address.toLowerCase();
+    var web3 = this.web3Provider.getWeb3();
+    var con = this.web3Provider.getdMarkContract();
+    con.transfer(web3.eth.accounts[5],13430);
   }
 
   printUser() {
@@ -49,23 +68,16 @@ export class HomePage {
   }
 
   checkBalance() {
-    console.log("Checking ETH user balance");
-    var web3 = this.web3Provider.getWeb3();
-    var bal = web3.eth.getBalance(this.user.address).c;
-    console.log(bal);
-    var con = this.web3Provider.getdMarkContract();
-    var baldMark = con.balanceOf(this.user.address).c;
-    console.log(baldMark);
-    this.balance = "ETH: " + bal[0] / 10000 + " dMT: " + baldMark[0]
+    this.web3Provider.checkBalance();
   }
 
   transfer() {
     console.log("Transfering");
     var web3 = this.web3Provider.getWeb3();
-    var sender = web3.eth.accounts[0];
+    var sender = web3.eth.accounts[5];
     var receiver = this.user.address;
-    var amount = web3.toWei(1.01, "ether")
-    var hash = web3.eth.sendTransaction({from:sender, to:receiver, value: amount});
+    var amount = web3.toWei(0.10, "ether")
+    var hash = web3.eth.sendTransaction({from:receiver, to:sender, value: amount});
     console.log("Transaction Hash: " + hash);
   }
 

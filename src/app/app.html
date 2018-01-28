@@ -6,11 +6,37 @@
   </ion-header>
 
   <ion-content>
+    <div text-center>
+      <ngx-qrcode [qrc-value]="qr"></ngx-qrcode>
+    </div>
+    <div text-center>
+      <label><b>ETH</b> {{web3Provider.ether}} <b>dDT</b> {{web3Provider.dDT}}</label>
+    </div>
+    <br>
     <ion-list>
+      <ion-list-header>
+        Options
+      </ion-list-header>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
     </ion-list>
+
+    <ion-footer no-border>
+      <ion-toolbar no-border-top>
+    <ion-buttons start>
+      <button  ion-button icon-only color="nav">
+        <ion-icon name="contact"></ion-icon> <small>Switch Accounts</small>
+      </button>
+    </ion-buttons>
+    <ion-title></ion-title>
+    <ion-buttons end>
+      <button  ion-button icon-end outline color="nav">
+        <small>Help</small>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+    </ion-footer>
   </ion-content>
 
 </ion-menu>

@@ -8,8 +8,15 @@
 </ion-header>
 
 <ion-content>
+  <br>
+  <button ion-button color="dark" outline (click)="set()">Set</button>
+  <br>
+  <br>
+  <ion-item>
+    <ion-input type="text" value="" [(ngModel)]="tempuser"></ion-input>
+  </ion-item>
   <ion-list>
-    <button ion-item *ngFor="let item of items">
+    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
       {{item}}
     </button>
   </ion-list>

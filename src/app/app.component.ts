@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
+import { Storage } from '@ionic/storage';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { Web3Provider } from '../providers/web3/web3';
@@ -14,10 +14,11 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
-
+  user:any;
+  qr = null;
   pages: Array<{title: string, component: any}>;
 
-  constructor(public web3Provider:Web3Provider,public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public storage:Storage,public web3Provider:Web3Provider,public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -26,9 +27,18 @@ export class MyApp {
       { title: 'Public Keys', component: ListPage }
     ];
 
+    this.storage.get('account').then((val) => {
+      this.user = val;
+      this.web3Provider.setUser(this.user.address);
+      this.qr = this.user.address;
+      console.log("Account Set!", this.user);
+    });
+
     //console.log(this.web3Provider.getWeb3().eth.accounts);
 
   }
+
+  ionViewWillEnter() {  }
 
   initializeApp() {
     this.platform.ready().then(() => {

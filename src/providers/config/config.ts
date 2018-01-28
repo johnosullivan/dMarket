@@ -9,7 +9,7 @@ export class ConfigProvider {
 
   constructor() {
     this.ETH_URL = this._readString('ETH_URL', 'http://localhost:7545');
-    this.dMARK_Address = this._readString('dMARK_Address', '0xf12b5dd4ead5f743c6baa640b0216200e89b60da');
+    this.dMARK_Address = this._readString('dMARK_Address', '0xf7e3e47e06f1bddecb1b2f3a7f60b6b25fd2e233');
   }
 
   private _readString(key: string, defaultValue?: string): string {

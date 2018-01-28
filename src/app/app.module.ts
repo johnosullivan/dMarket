@@ -10,7 +10,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Web3Provider } from '../providers/web3/web3';
 import { ConfigProvider } from '../providers/config/config';
+import { ABIProvider } from '../providers/web3/abi';
 import { IonicStorageModule } from '@ionic/storage';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { IonicStorageModule } from '@ionic/storage';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    NgxQRCodeModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -34,6 +37,7 @@ import { IonicStorageModule } from '@ionic/storage';
     SplashScreen,
     Web3Provider,
     ConfigProvider,
+    ABIProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Web3Provider } from '../../providers/web3/web3';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-list',
@@ -8,11 +9,30 @@ import { Web3Provider } from '../../providers/web3/web3';
 })
 export class ListPage {
   items: string[];
+  tempuser:any;
 
-  constructor(public web3Provider:Web3Provider,public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public storage:Storage,public web3Provider:Web3Provider,public navCtrl: NavController, public navParams: NavParams) {
 
     this.items = this.web3Provider.getWeb3().eth.accounts;
+    this.tempuser = "";
+  }
 
+  set() {
+    console.log("Set ETH User");
+    var web3account = this.web3Provider.getWeb3Account();
+    var data = this.tempuser.split(",");
+    var temp = { address: data[0],privateKey: data[1] };
+    this.storage.set('account', temp);
+  }
+
+  itemTapped(event, item) {
+    console.log("Checking Value: " + item);
+    var web3 = this.web3Provider.getWeb3();
+    var bal = web3.eth.getBalance(item).c;
+    var con = this.web3Provider.getdMarkContract();
+    var baldMark = con.balanceOf(item).c;
+    var result = "ETH: " + bal[0] / 10000 + " dMT: " + baldMark[0];
+    console.log("Result: " + result);
   }
 
 }
