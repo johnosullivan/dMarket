@@ -14,7 +14,7 @@ export class ListPage {
   constructor(public storage:Storage,public web3Provider:Web3Provider,public navCtrl: NavController, public navParams: NavParams) {
 
     this.items = this.web3Provider.getWeb3().eth.accounts;
-    this.tempuser = "";
+    this.tempuser = "0x0d1d4e623D10F9FBA5Db95830F7d3839406C6AF2,388c684f0ba1ef5017716adb5d21a053ea8e90277d0868337519f97bede61418";
   }
 
   set() {

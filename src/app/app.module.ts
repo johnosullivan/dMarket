@@ -5,7 +5,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
-
+import { AddUserPage } from '../pages/add-user/add-user';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Web3Provider } from '../providers/web3/web3';
@@ -18,7 +18,8 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
   declarations: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    AddUserPage
   ],
   imports: [
     BrowserModule,
@@ -30,7 +31,8 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    AddUserPage
   ],
   providers: [
     StatusBar,

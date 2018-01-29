@@ -1,11 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, ModalController, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { Web3Provider } from '../providers/web3/web3';
+import { AddUserPage } from '../pages/add-user/add-user';
 
 @Component({
   templateUrl: 'app.html'
@@ -18,13 +19,12 @@ export class MyApp {
   qr = null;
   pages: Array<{title: string, component: any}>;
 
-  constructor(public storage:Storage,public web3Provider:Web3Provider,public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public modalCtrl: ModalController,public events: Events,public storage:Storage,public web3Provider:Web3Provider,public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'Public Keys', component: ListPage }
+      { title: 'Home', component: HomePage }
     ];
 
     this.storage.get('account').then((val) => {
@@ -34,8 +34,18 @@ export class MyApp {
       console.log("Account Set!", this.user);
     });
 
+    events.subscribe('user:new', (user, time) => {
+      console.log('Public', user, 'at', time);
+      let profileModal = this.modalCtrl.create(AddUserPage, { publicKey: user });
+      profileModal.present();
+    });
+
     //console.log(this.web3Provider.getWeb3().eth.accounts);
 
+  }
+
+  accounts() {
+    this.nav.setRoot(ListPage);
   }
 
   ionViewWillEnter() {  }

@@ -1,0 +1,38 @@
+<ion-header>
+
+  <ion-navbar color="nav">
+    <ion-title>User Details</ion-title>
+    <ion-buttons end>
+            <button ion-button icon-only (click)="closeModal()">
+              <ion-icon name="close"></ion-icon>
+            </button>
+          </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content style="background-color:#eee;">
+
+<ion-list>
+  <ion-item text-center>
+    <small style="">{{publicKey}}</small>
+  </ion-item>
+  <ion-item>
+    <ion-label color="nav" stacked>First Name</ion-label>
+    <ion-input type="text" [(ngModel)]="user.firstName" placeholder=""></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="nav" stacked>Last Name</ion-label>
+    <ion-input type="text" [(ngModel)]="user.lastName" placeholder=""></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="nav" stacked>Email</ion-label>
+    <ion-input type="text" [(ngModel)]="user.email" placeholder=""></ion-input>
+  </ion-item>
+  <div padding text-center>
+    <button ion-button color="dark" full (click)="save()">Save</button>
+  </div>
+</ion-list>
+
+</ion-content>
