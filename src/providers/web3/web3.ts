@@ -52,14 +52,14 @@ export class Web3Provider {
     var contract = this.web3.eth.contract(this.abiProvider.TOKEN_ABI);
     this.tokenContract = contract.at(this.configProvider.dMARK_Address);
 
-    var usercon = this.web3.eth.contract(this.abiProvider.USER_ABI);
-    this.userContract = usercon.at(this.configProvider.dUSER_Address);
+    //var usercon = this.web3.eth.contract(this.abiProvider.USER_ABI);
+    //this.userContract = usercon.at(this.configProvider.dUSER_Address);
 
-    if (this.userContract.isUser(this.paddress)) {
-      var userdata = this.userContract.getUser(this.paddress);
-      this.email = userdata[0];
-      this.firstName = userdata[1];
-      this.lastName = userdata[2];
+    //if (this.userContract.isUser(this.paddress)) {
+    //  var userdata = this.userContract.getUser(this.paddress);
+    //  this.email = userdata[0];
+    //  this.firstName = userdata[1];
+    //  this.lastName = userdata[2];
 
       var transferEvent = this.tokenContract.Transfer();
       var self = this;
@@ -78,9 +78,9 @@ export class Web3Provider {
           }
       });
       this.checkBalance();
-    } else {
-      this.events.publish('user:new', this.paddress, Date.now());
-    }
+    //} else {
+      //this.events.publish('user:new', this.paddress, Date.now());
+    //}
     /*var filter = this.web3.eth.filter('latest');
     this.transWatching = filter.watch(function(error, result) {
       if (self.paddress !== undefined) {
@@ -119,10 +119,10 @@ export class Web3Provider {
   checkBalance() {
     console.log("Check Balance");
     var balance = this.web3.eth.getBalance(this.paddress).c;
-    var contract = this.getdMarkContract();
-    var baldMark = contract.balanceOf(this.paddress).c;
+    //var contract = this.getdMarkContract();
+    //var baldMark = contract.balanceOf(this.paddress).c;
     this.ether = balance[0] / 10000;
-    this.dDT = baldMark[0];
+    //this.dDT = baldMark[0];
   }
 
   stopWatching() { this.transWatching.stopWatching(); }

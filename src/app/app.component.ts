@@ -24,7 +24,9 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage }
+      { title: 'Home', component: HomePage },
+      { title: 'My Listings', component: HomePage },
+      { title: 'Transaction History', component: HomePage }
     ];
 
     this.storage.get('account').then((val) => {
