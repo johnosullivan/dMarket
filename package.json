@@ -20,6 +20,7 @@
     "@angular/http": "5.0.3",
     "@angular/platform-browser": "5.0.3",
     "@angular/platform-browser-dynamic": "5.0.3",
+    "@ionic-native/barcode-scanner": "^4.5.3",
     "@ionic-native/core": "4.4.0",
     "@ionic-native/splash-screen": "4.4.0",
     "@ionic-native/status-bar": "4.4.0",
@@ -38,6 +39,7 @@
     "ionicons": "3.0.0",
     "ios-deploy": "^1.9.2",
     "ngx-qrcode2": "0.0.5",
+    "phonegap-plugin-barcodescanner": "^7.0.2",
     "rxjs": "5.5.2",
     "sw-toolbox": "3.6.0",
     "web3": "^0.20.4",
@@ -60,6 +62,9 @@
       "cordova-sqlite-storage": {},
       "cordova-plugin-touch-id": {
         "FACEID_USAGE_DESCRIPTION": " "
+      },
+      "phonegap-plugin-barcodescanner": {
+        "CAMERA_USAGE_DESCRIPTION": " "
       }
     },
     "platforms": [

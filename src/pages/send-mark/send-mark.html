@@ -20,11 +20,14 @@
     <ion-label color="nav" stacked>To Public Address</ion-label>
     <ion-input type="text" [(ngModel)]="toAddress" placeholder=""></ion-input>
   </ion-item>
+  <div padding text-center style="background-color:white;">
+    <button ion-button color="light" full (click)="scan()">Scan QR Code</button>
+  </div>
   <ion-item>
     <ion-label color="nav" stacked>Amount of dMark</ion-label>
     <ion-input type="text" [(ngModel)]="dMark" placeholder=""></ion-input>
   </ion-item>
   <div padding text-center style="background-color:white;">
-    <button ion-button color="light" full (click)="send()">Send</button>
+    <button ion-button color="nav" full (click)="send()">Send</button>
   </div>
 </ion-content>

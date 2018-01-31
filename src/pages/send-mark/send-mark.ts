@@ -9,10 +9,13 @@ declare const Buffer
 import Tx from 'ethereumjs-tx';
 import Units from 'ethereumjs-units';
 
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+
+
 @IonicPage()
 @Component({
   selector: 'page-send-mark',
-  templateUrl: 'send-mark.html',
+  templateUrl: 'send-mark.html',providers:[BarcodeScanner]
 })
 export class SendMarkPage {
 
@@ -20,13 +23,22 @@ export class SendMarkPage {
   toAddress:any;
   gasPrice:any;
 
-  constructor(public modalCtrl: ModalController,public configProvider:ConfigProvider,public viewController:ViewController,public web3Provider:Web3Provider,public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private barcodeScanner: BarcodeScanner,public modalCtrl: ModalController,public configProvider:ConfigProvider,public viewController:ViewController,public web3Provider:Web3Provider,public navCtrl: NavController, public navParams: NavParams) {
     this.dMark = '';
     this.toAddress = '';
     this.gasPrice = '';
   }
 
   ionViewDidLoad() { }
+
+  scan() {
+    var self = this;
+    this.barcodeScanner.scan().then((barcodeData) => {
+      console.log(JSON.stringify(barcodeData));
+      self.toAddress = barcodeData.text;
+    }, (err) => {
+    });
+  }
 
   send() {
     let confirm = this.modalCtrl.create(ComfirmSendPage, { dMark: parseInt(this.dMark), toAddress: this.toAddress }, { enableBackdropDismiss: false });

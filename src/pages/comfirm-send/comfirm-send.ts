@@ -7,10 +7,12 @@ declare const Buffer
 import Tx from 'ethereumjs-tx';
 import Units from 'ethereumjs-units';
 
+import { TouchID } from '@ionic-native/touch-id';
+
 @IonicPage()
 @Component({
   selector: 'page-comfirm-send',
-  templateUrl: 'comfirm-send.html',
+  templateUrl: 'comfirm-send.html',providers:[TouchID]
 })
 export class ComfirmSendPage {
 
@@ -21,7 +23,8 @@ export class ComfirmSendPage {
   receipt:any;
   isSending:boolean;
 
-  constructor(public viewController:ViewController,public configProvider:ConfigProvider,public web3Provider:Web3Provider,public navCtrl: NavController, public navParams: NavParams) {
+
+  constructor(public touchID:TouchID,public viewController:ViewController,public configProvider:ConfigProvider,public web3Provider:Web3Provider,public navCtrl: NavController, public navParams: NavParams) {
     this.toAddress = this.navParams.get("toAddress");
     this.amount = this.navParams.get("dMark");
 
@@ -40,6 +43,7 @@ export class ComfirmSendPage {
     this.gasPrice = Units.convert(result, 'wei', 'eth') + " ETH";
 
     this.isSending = false;
+
   }
 
   reject() {
@@ -50,6 +54,25 @@ export class ComfirmSendPage {
     this.isSending = true;
 
 
+    this.touchID.isAvailable().then(
+      res => {
+        this.touchID.verifyFingerprint('Scan your fingerprint to sign this transaction').then(
+          res => {
+            this.processTX("");
+          },
+          err => {
+
+          }
+        );
+      },
+      err => {
+        this.processTX("");
+      }
+    );
+
+  }
+
+  processTX(priv) {
     // privateKey needed via biometrics
     var privateKey = new Buffer(this.web3Provider.privateaddress, 'hex')
 

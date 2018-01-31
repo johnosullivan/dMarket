@@ -87,4 +87,7 @@
     <plugin name="cordova-plugin-touch-id" spec="^3.3.1">
         <variable name="FACEID_USAGE_DESCRIPTION" value=" " />
     </plugin>
+    <plugin name="phonegap-plugin-barcodescanner" spec="^7.0.2">
+        <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
+    </plugin>
 </widget>
