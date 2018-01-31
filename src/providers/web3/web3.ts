@@ -18,6 +18,8 @@ export class Web3Provider {
   ether:any;
 
   paddress:any;
+  privateaddress:any;
+
   transWatching:any;
 
   firstName:any;
@@ -42,6 +44,10 @@ export class Web3Provider {
     } else {
 
     }
+  }
+
+  setPrivateDebug(val) {
+    this.privateaddress = val;
   }
 
   setUser(address) {
@@ -119,10 +125,11 @@ export class Web3Provider {
   checkBalance() {
     console.log("Check Balance");
     var balance = this.web3.eth.getBalance(this.paddress).c;
-    //var contract = this.getdMarkContract();
-    //var baldMark = contract.balanceOf(this.paddress).c;
+    var contract = this.getdMarkContract();
+    var baldMark = contract.balanceOf(this.paddress).c;
+    console.log(baldMark);
     this.ether = balance[0] / 10000;
-    //this.dDT = baldMark[0];
+    this.dDT = baldMark[0];
   }
 
   stopWatching() { this.transWatching.stopWatching(); }

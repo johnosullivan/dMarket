@@ -5,6 +5,8 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { SendMarkPage } from '../pages/send-mark/send-mark';
+import { ComfirmSendPage } from '../pages/comfirm-send/comfirm-send';
 import { AddUserPage } from '../pages/add-user/add-user';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -19,7 +21,9 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     MyApp,
     HomePage,
     ListPage,
-    AddUserPage
+    AddUserPage,
+    SendMarkPage,
+    ComfirmSendPage
   ],
   imports: [
     BrowserModule,
@@ -32,7 +36,9 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     MyApp,
     HomePage,
     ListPage,
-    AddUserPage
+    AddUserPage,
+    SendMarkPage,
+    ComfirmSendPage
   ],
   providers: [
     StatusBar,

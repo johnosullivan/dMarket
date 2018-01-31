@@ -32,6 +32,9 @@
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
+      <button menuClose ion-item (click)="sendMark()">
+        Send dMark
+      </button>
     </ion-list>
 
     <ion-footer no-border>

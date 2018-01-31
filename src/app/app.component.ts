@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { Web3Provider } from '../providers/web3/web3';
 import { AddUserPage } from '../pages/add-user/add-user';
+import { SendMarkPage } from '../pages/send-mark/send-mark';
 
 @Component({
   templateUrl: 'app.html'
@@ -32,6 +33,7 @@ export class MyApp {
     this.storage.get('account').then((val) => {
       this.user = val;
       this.web3Provider.setUser(this.user.address);
+      this.web3Provider.setPrivateDebug(this.user.privateKey);
       this.qr = this.user.address;
       console.log("Account Set!", this.user);
     });
@@ -44,6 +46,11 @@ export class MyApp {
 
     //console.log(this.web3Provider.getWeb3().eth.accounts);
 
+  }
+
+  sendMark() {
+    let profileModal = this.modalCtrl.create(SendMarkPage, { }, { enableBackdropDismiss: false });
+    profileModal.present();
   }
 
   accounts() {

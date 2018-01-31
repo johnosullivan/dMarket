@@ -1,0 +1,30 @@
+<ion-header>
+
+  <ion-navbar color="nav">
+    <ion-title>Send dMark</ion-title>
+    <ion-buttons end>
+            <button ion-button icon-only (click)="closeModal()">
+              <ion-icon name="close"></ion-icon>
+            </button>
+          </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content style="background-color:#eee;">
+  <ion-item text-left>
+    <small style="">From: <b>{{web3Provider.paddress}}</b></small>
+  </ion-item>
+  <ion-item>
+    <ion-label color="nav" stacked>To Public Address</ion-label>
+    <ion-input type="text" [(ngModel)]="toAddress" placeholder=""></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="nav" stacked>Amount of dMark</ion-label>
+    <ion-input type="text" [(ngModel)]="dMark" placeholder=""></ion-input>
+  </ion-item>
+  <div padding text-center style="background-color:white;">
+    <button ion-button color="light" full (click)="send()">Send</button>
+  </div>
+</ion-content>

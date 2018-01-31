@@ -1,0 +1,28 @@
+
+<ion-header>
+
+  <ion-navbar color="nav">
+    <ion-title>Confirm Transaction</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content style="background-color:#eee;">
+  <ion-item text-left>
+    <small style="">From: <b>{{web3Provider.paddress}}</b></small>
+  </ion-item>
+  <ion-item text-left>
+    <small style="">To: <b>{{toAddress}}</b></small>
+  </ion-item>
+  <ion-item text-left>
+    <small style="">dMark Acount: <b>{{amount}}</b></small>
+  </ion-item>
+  <ion-item text-left>
+    <small style="">Transaction Fee: <b>{{gasPrice}}</b></small>
+  </ion-item>
+  <div padding text-center style="background-color:white;">
+    <button ion-button color="danger" full (click)="reject()" [(disabled)]="isSending">Reject</button>
+    <br>
+    <button ion-button color="light" full (click)="sign()" [(disabled)]="isSending">Sign <ion-spinner style="stroke: #f4f4f4;" *ngIf="isSending"></ion-spinner></button>
+  </div>
+</ion-content>
