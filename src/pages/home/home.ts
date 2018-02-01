@@ -17,7 +17,6 @@ export class HomePage {
 
   constructor(
     public userProvider:UserProvider,
-    private touchId: TouchID,
     private storage: Storage,
     public navCtrl: NavController,
     public web3Provider:Web3Provider
