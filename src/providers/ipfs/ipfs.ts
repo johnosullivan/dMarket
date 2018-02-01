@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-
 import { UserProvider } from '../user/user';
 
+//http://127.0.0.1:8080/ipfs/
 import ipfsAPI from 'ipfs-api';
 declare const Buffer;
 
@@ -19,13 +19,12 @@ export class IpfsProvider {
   }
 
   new(publicAddress) {
+    var self = this;
     var paddress = publicAddress;
     return new Promise(function (resolve, reject) {
       var data = new Buffer('{}');
       var path = "dMarket_" + paddress + ".json";
-      console.log(path);
-      const stream = this.ipfs.files.addReadableStream();
-      var self = this;
+      const stream = self.ipfs.files.addReadableStream();
       stream.on('data', function (file) {
         console.log(file);
         var hash = file['hash'];
@@ -43,7 +42,6 @@ export class IpfsProvider {
     return new Promise(function (resolve, reject) {
       var data = new Buffer(JSON.stringify(pdata));
       var path = "dMarket_" + paddress + ".json";
-      console.log(path);
       const stream = self.ipfs.files.addReadableStream();
       stream.on('data', function (file) {
         console.log(file);

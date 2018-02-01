@@ -8,6 +8,8 @@ import { ListPage } from '../pages/list/list';
 import { SendMarkPage } from '../pages/send-mark/send-mark';
 import { ComfirmSendPage } from '../pages/comfirm-send/comfirm-send';
 import { AddUserPage } from '../pages/add-user/add-user';
+import { ListingPage } from '../pages/listing/listing';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Web3Provider } from '../providers/web3/web3';
@@ -27,7 +29,8 @@ import { IpfsProvider } from '../providers/ipfs/ipfs';
     ListPage,
     AddUserPage,
     SendMarkPage,
-    ComfirmSendPage
+    ComfirmSendPage,
+    ListingPage
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,8 @@ import { IpfsProvider } from '../providers/ipfs/ipfs';
     ListPage,
     AddUserPage,
     SendMarkPage,
-    ComfirmSendPage
+    ComfirmSendPage,
+    ListingPage
   ],
   providers: [
     StatusBar,

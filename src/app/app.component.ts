@@ -9,6 +9,7 @@ import { Web3Provider } from '../providers/web3/web3';
 import { AddUserPage } from '../pages/add-user/add-user';
 import { SendMarkPage } from '../pages/send-mark/send-mark';
 import { UserProvider } from '../providers/user/user';
+import { ListingPage } from '../pages/listing/listing';
 
 @Component({
   templateUrl: 'app.html'
@@ -29,13 +30,14 @@ export class MyApp {
     public web3Provider:Web3Provider,
     public platform: Platform,
     public statusBar: StatusBar,
-    public splashScreen: SplashScreen) {
+    public splashScreen: SplashScreen
+  ) {
 
     this.initializeApp();
 
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'My Listings', component: HomePage },
+      { title: 'My Listings', component: ListingPage },
       { title: 'Transaction History', component: HomePage }
     ];
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Web3Provider } from '../../providers/web3/web3';
 import { Storage } from '@ionic/storage';
+import { UserProvider } from '../../providers/user/user';
 
 @Component({
   selector: 'page-list',
@@ -11,7 +12,7 @@ export class ListPage {
   items: string[];
   tempuser:any;
 
-  constructor(public storage:Storage,public web3Provider:Web3Provider,public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public userProvider:UserProvider,public storage:Storage,public web3Provider:Web3Provider,public navCtrl: NavController, public navParams: NavParams) {
 
     this.items = this.web3Provider.getWeb3().eth.accounts;
     this.tempuser = "0x0d1d4e623D10F9FBA5Db95830F7d3839406C6AF2,388c684f0ba1ef5017716adb5d21a053ea8e90277d0868337519f97bede61418";
@@ -23,6 +24,14 @@ export class ListPage {
     var data = this.tempuser.split(",");
     var temp = { address: data[0],privateKey: data[1] };
     this.storage.set('account', temp);
+  }
+
+  update() {
+    this.userProvider.user_data = {
+      transactions: [],
+      listings: []
+    };
+    this.userProvider.update();
   }
 
   itemTapped(event, item) {

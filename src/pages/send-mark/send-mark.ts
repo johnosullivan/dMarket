@@ -1,16 +1,13 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,ViewController,ModalController } from 'ionic-angular';
 import { Web3Provider } from '../../providers/web3/web3';
-
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { ConfigProvider } from '../../providers/config/config';
 import { ComfirmSendPage } from '../comfirm-send/comfirm-send';
 
 declare const Buffer
 import Tx from 'ethereumjs-tx';
 import Units from 'ethereumjs-units';
-
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-
 
 @IonicPage()
 @Component({
@@ -23,7 +20,15 @@ export class SendMarkPage {
   toAddress:any;
   gasPrice:any;
 
-  constructor(private barcodeScanner: BarcodeScanner,public modalCtrl: ModalController,public configProvider:ConfigProvider,public viewController:ViewController,public web3Provider:Web3Provider,public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    private barcodeScanner: BarcodeScanner,
+    public modalCtrl: ModalController,
+    public configProvider:ConfigProvider,
+    public viewController:ViewController,
+    public web3Provider:Web3Provider,
+    public navCtrl: NavController,
+    public navParams: NavParams
+  ) {
     this.dMark = '';
     this.toAddress = '';
     this.gasPrice = '';
@@ -34,9 +39,9 @@ export class SendMarkPage {
   scan() {
     var self = this;
     this.barcodeScanner.scan().then((barcodeData) => {
-      console.log(JSON.stringify(barcodeData));
       self.toAddress = barcodeData.text;
     }, (err) => {
+      /* Could not scan the public address QR Code */
     });
   }
 
@@ -48,57 +53,6 @@ export class SendMarkPage {
       }
     });
     confirm.present();
-
-    /*var privateKey = new Buffer(this.web3Provider.privateaddress, 'hex')
-
-    var web3 = this.web3Provider.getWeb3();
-    const gasPrice = web3.eth.gasPrice;
-    const gasPriceHex = web3.toHex(gasPrice);
-    const gasLimitHex = web3.toHex(300000);
-
-    const nonce = web3.eth.getTransactionCount(this.web3Provider.paddress);
-    const nonceHex = web3.toHex(nonce);
-    console.log(nonceHex);
-
-    var tokenInstance = this.web3Provider.getdMarkContract();
-
-    var callData = tokenInstance.transfer.getData(this.toAddress,parseInt(this.dMark));
-
-    const rawTx = {
-        nonce:nonceHex,
-        gasPrice: gasPriceHex,
-        gasLimit: gasLimitHex,
-        data: callData,
-        to: this.configProvider.dMARK_Address,
-        from: web3.eth.defaultAccount
-    };
-
-    var result = web3.eth.estimateGas(rawTx);
-    console.log(result);
-    this.gasPrice = Units.convert(result, 'wei', 'eth') + " ETH";
-
-    const tx = new Tx(rawTx);
-    tx.sign(privateKey);
-    const serializedTx = tx.serialize();
-
-    function waitForTransactionReceipt(hash) {
-        console.log('Waiting for contract to be mined...');
-        const receipt = web3.eth.getTransactionReceipt(hash);
-        if (receipt == null) {
-            setTimeout(() => {
-                waitForTransactionReceipt(hash);
-            }, 1000);
-        } else {
-            console.log('Contract Address: ', receipt);
-        }
-    }
-
-    web3.eth.sendRawTransaction(serializedTx.toString('hex'), (err, hash) => {
-        if (err) { console.log(err); return; }
-        console.log('Creation tx: ' + hash);
-        waitForTransactionReceipt(hash);
-    });*/
-
   }
 
   closeModal() {

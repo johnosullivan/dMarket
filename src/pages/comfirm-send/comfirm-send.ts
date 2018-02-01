@@ -8,6 +8,7 @@ import Tx from 'ethereumjs-tx';
 import Units from 'ethereumjs-units';
 
 import { TouchID } from '@ionic-native/touch-id';
+import { UserProvider } from '../../providers/user/user';
 
 @IonicPage()
 @Component({
@@ -23,8 +24,16 @@ export class ComfirmSendPage {
   receipt:any;
   isSending:boolean;
 
+  constructor(
+    public touchID:TouchID,
+    public viewController:ViewController,
+    public configProvider:ConfigProvider,
+    public web3Provider:Web3Provider,
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public userProvider:UserProvider
+  ) {
 
-  constructor(public touchID:TouchID,public viewController:ViewController,public configProvider:ConfigProvider,public web3Provider:Web3Provider,public navCtrl: NavController, public navParams: NavParams) {
     this.toAddress = this.navParams.get("toAddress");
     this.amount = this.navParams.get("dMark");
 
@@ -41,7 +50,6 @@ export class ComfirmSendPage {
 
     var result = web3.eth.estimateGas(rawTx);
     this.gasPrice = Units.convert(result, 'wei', 'eth') + " ETH";
-
     this.isSending = false;
 
   }
@@ -52,20 +60,17 @@ export class ComfirmSendPage {
 
   sign() {
     this.isSending = true;
-
-
     this.touchID.isAvailable().then(
       res => {
         this.touchID.verifyFingerprint('Scan your fingerprint to sign this transaction').then(
           res => {
             this.processTX("");
           },
-          err => {
-
-          }
+          err => { /*Error processing the finger print */ }
         );
       },
       err => {
+        /* For web testing / will trigger for non cordova application */
         this.processTX("");
       }
     );
@@ -102,17 +107,17 @@ export class ComfirmSendPage {
         if (err) { console.log(err); return; }
         self.waitForTransactionReceipt(hash);
     });
-
   }
 
   waitForTransactionReceipt(hash) {
-      this.receipt = this.web3Provider.getWeb3().eth.getTransactionReceipt(hash);
-      if (this.receipt == null) {
-          setTimeout(() => { this.waitForTransactionReceipt(hash); }, 1000);
-      } else {
-          console.log('Contract Address: ', this.receipt);
-          this.viewController.dismiss({status:true});
-      }
+    this.receipt = this.web3Provider.getWeb3().eth.getTransactionReceipt(hash);
+    if (this.receipt == null) {
+      setTimeout(() => { this.waitForTransactionReceipt(hash); }, 1000);
+    } else {
+      console.log('Transactions (TX): ', this.receipt);
+      this.userProvider.addTransaction(this.receipt['transactionHash']);
+      this.viewController.dismiss({status:true});
+    }
   }
 
   ionViewDidLoad() {

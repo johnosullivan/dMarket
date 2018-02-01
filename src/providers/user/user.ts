@@ -30,6 +30,17 @@ export class UserProvider {
     });
   }
 
+  addTransaction(hash) {
+    if (this.user_data['transactions'] === undefined) {
+      this.user_data['transactions'] = [];
+      this.user_data['transactions'].push(hash);
+      this.update();
+    } else {
+      this.user_data['transactions'].push(hash);
+      this.update();
+    }
+  }
+
   update() {
     this.ipfsProvider.update(this.web3Provider.paddress, this.user_data).then((hash) => {
       this.getProfile(hash);
