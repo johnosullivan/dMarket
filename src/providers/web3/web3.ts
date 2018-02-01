@@ -76,7 +76,7 @@ export class Web3Provider {
               var publicAddress = self.paddress.toLowerCase();
               var from = transactionArg.from.toLowerCase();
               var to = transactionArg.to.toLowerCase();
-              console.log("transactionArg: ",transactionArg);
+              console.log("Transaction_Args: ",transactionArg);
               if ((publicAddress === from) || (publicAddress === to)) {
                 self.checkBalance();
               }
@@ -123,11 +123,11 @@ export class Web3Provider {
   }
 
   checkBalance() {
-    console.log("Check Balance");
+    //console.log("Check Balance");
     var balance = this.web3.eth.getBalance(this.paddress).c;
     var contract = this.getdMarkContract();
     var baldMark = contract.balanceOf(this.paddress).c;
-    console.log(baldMark);
+    //console.log(baldMark);
     this.ether = balance[0] / 10000;
     this.dDT = baldMark[0];
   }

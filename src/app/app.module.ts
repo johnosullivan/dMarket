@@ -16,6 +16,10 @@ import { ABIProvider } from '../providers/web3/abi';
 import { IonicStorageModule } from '@ionic/storage';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { UserProvider } from '../providers/user/user';
+import { IpfsProvider } from '../providers/ipfs/ipfs';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -29,7 +33,8 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
-    NgxQRCodeModule
+    NgxQRCodeModule,
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -46,7 +51,9 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     Web3Provider,
     ConfigProvider,
     ABIProvider,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    UserProvider,
+    IpfsProvider
   ]
 })
 export class AppModule {}

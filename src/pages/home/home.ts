@@ -6,6 +6,8 @@ import { TouchID } from '@ionic-native/touch-id';
 
 import Accounts from 'web3-eth-accounts';
 
+import { UserProvider } from '../../providers/user/user';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
@@ -18,20 +20,25 @@ export class HomePage {
   tempuser:any;
   transWatching:any;
 
-  constructor(private touchId: TouchID,private storage: Storage,public navCtrl: NavController,public web3Provider:Web3Provider) {
+  constructor(public userProvider:UserProvider,private touchId: TouchID,private storage: Storage,public navCtrl: NavController,public web3Provider:Web3Provider) {
 
     this.balance = "";
     this.tempuser = "";
-
-    this.touchId.isAvailable().then(
-      res => console.log('TouchID is available!'),
-      err => console.error('TouchID is not available', err)
-    );
 
   }
 
   ionViewWillLeave() {
 
+  }
+
+  update() {
+    this.userProvider.user_data = {
+      "publicKey":this.web3Provider.paddress,
+      "firstName":"John",
+      "lastName":"O'Sullivan",
+      "listings": []
+    };
+    this.userProvider.update();
   }
 
   set() {

@@ -13,6 +13,7 @@ contract ERC20 {
     string public name;
     string public symbol;
     uint8 public decimals = 18;
+    uint8 mpFactor = 1;
     uint256 public totalSupply;
 
     mapping (address => uint256) public balanceOf;
@@ -22,7 +23,7 @@ contract ERC20 {
     event Burn(address indexed from, uint256 value);
 
     function ERC20(uint256 initialSupply, string tokenName, string tokenSymbol) public {
-        totalSupply = initialSupply * 10 ** uint256(decimals);
+        totalSupply = initialSupply * mpFactor ** uint256(decimals);
         balanceOf[msg.sender] = totalSupply;
         name = tokenName;
         symbol = tokenSymbol;
@@ -136,7 +137,7 @@ contract dMark is isOwner, ERC20 {
     }
 
     function sell(uint256 amount) public {
-        require(this.balance >= amount * sellPrice);
+        require(owner.balance >= amount * sellPrice);
         _transfer(msg.sender, owner, amount);
         msg.sender.transfer(amount * sellPrice);
     }

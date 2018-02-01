@@ -8,6 +8,7 @@ import { ListPage } from '../pages/list/list';
 import { Web3Provider } from '../providers/web3/web3';
 import { AddUserPage } from '../pages/add-user/add-user';
 import { SendMarkPage } from '../pages/send-mark/send-mark';
+import { UserProvider } from '../providers/user/user';
 
 @Component({
   templateUrl: 'app.html'
@@ -20,22 +21,40 @@ export class MyApp {
   qr = null;
   pages: Array<{title: string, component: any}>;
 
-  constructor(public modalCtrl: ModalController,public events: Events,public storage:Storage,public web3Provider:Web3Provider,public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(
+    public userProvider:UserProvider,
+    public modalCtrl: ModalController,
+    public events: Events,
+    public storage:Storage,
+    public web3Provider:Web3Provider,
+    public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen) {
+
     this.initializeApp();
 
-    // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
       { title: 'My Listings', component: HomePage },
       { title: 'Transaction History', component: HomePage }
     ];
 
-    this.storage.get('account').then((val) => {
-      this.user = val;
+    this.storage.get('account').then((account) => {
+      this.user = account;
       this.web3Provider.setUser(this.user.address);
       this.web3Provider.setPrivateDebug(this.user.privateKey);
       this.qr = this.user.address;
-      console.log("Account Set!", this.user);
+      console.log("Account: ", this.user);
+    });
+
+    var self = this;
+    this.storage.get('ipfs').then((ipfs) => {
+      console.log("IPFS Hash: ", ipfs);
+      if (ipfs == null) {
+        self.userProvider.newProfile();
+      } else {
+        self.userProvider.getProfile(ipfs);
+      }
     });
 
     events.subscribe('user:new', (user, time) => {
@@ -43,8 +62,6 @@ export class MyApp {
       let profileModal = this.modalCtrl.create(AddUserPage, { publicKey: user });
       profileModal.present();
     });
-
-    //console.log(this.web3Provider.getWeb3().eth.accounts);
 
   }
 
@@ -61,16 +78,12 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
   }
 
   openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
 }
