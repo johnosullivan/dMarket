@@ -8,4 +8,7 @@
 </ion-header>
 <ion-content padding style="background-color:#eee;">
 <button ion-button color="dark" (click)="transHistory()">TXS_HISTORY</button>
+<button ion-button color="dark" (click)="add()">Add</button>
+<br><br>
+<input id="file-field" name="file-field" (change)="uploadFile($event)" type="file" multiple>
 </ion-content>

@@ -9,6 +9,7 @@ import { SendMarkPage } from '../pages/send-mark/send-mark';
 import { ComfirmSendPage } from '../pages/comfirm-send/comfirm-send';
 import { AddUserPage } from '../pages/add-user/add-user';
 import { ListingPage } from '../pages/listing/listing';
+import { AddProductPage } from '../pages/add-product/add-product';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -21,6 +22,21 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { UserProvider } from '../providers/user/user';
 import { IpfsProvider } from '../providers/ipfs/ipfs';
+import { WindowRef } from './window';
+
+/*
+android -> on a device running Android.
+cordova ->	on a device running Cordova.
+core -> on a desktop device.
+ios -> on a device running iOS.
+ipad -> on an iPad device.
+iphone -> on an iPhone device.
+mobile -> on a mobile device.
+mobileweb -> in a browser on a mobile device.
+phablet -> on a phablet device.
+tablet -> on a tablet device.
+windows -> on a device running Windows.
+*/
 
 @NgModule({
   declarations: [
@@ -30,7 +46,8 @@ import { IpfsProvider } from '../providers/ipfs/ipfs';
     AddUserPage,
     SendMarkPage,
     ComfirmSendPage,
-    ListingPage
+    ListingPage,
+    AddProductPage
   ],
   imports: [
     BrowserModule,
@@ -47,7 +64,8 @@ import { IpfsProvider } from '../providers/ipfs/ipfs';
     AddUserPage,
     SendMarkPage,
     ComfirmSendPage,
-    ListingPage
+    ListingPage,
+    AddProductPage
   ],
   providers: [
     StatusBar,
@@ -57,7 +75,8 @@ import { IpfsProvider } from '../providers/ipfs/ipfs';
     ABIProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserProvider,
-    IpfsProvider
+    IpfsProvider,
+    WindowRef
   ]
 })
 export class AppModule {}
