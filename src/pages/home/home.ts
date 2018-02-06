@@ -22,6 +22,10 @@ export class HomePage {
   tempuser:any;
   ipfs:any;
 
+  product:any;
+  files:any;
+  hash:any;
+
   constructor(
     public userProvider:UserProvider,
     private storage: Storage,
@@ -34,6 +38,10 @@ export class HomePage {
     this.balance = "";
     this.tempuser = "";
     this.ipfs = ipfsAPI('localhost', '5001', {protocol: 'http'});
+
+    this.product = {};
+    this.files = [];
+    this.hash = [];
   }
 
   ionViewWillLeave() {
@@ -52,6 +60,7 @@ export class HomePage {
       .then((response) => {
         console.log(response)
         ipfsId = response[0].hash
+        this.hash.push(ipfsId);
         console.log(ipfsId)
       }).catch((err) => {
         console.error(err)
@@ -59,16 +68,29 @@ export class HomePage {
     }
 
   uploadFile(event) {
-    let files = event.target.files;
-    console.log(files);
-    console.log(this.plt.is('core'));
-    /*if (files.length > 0) {
-      console.log(files);
-      const file = files[0]
-      let reader = new this.windowRef.nativeWindow.FileReader()
-      reader.onloadend = () => this.saveToIpfs(reader)
-      reader.readAsArrayBuffer(file)
-    }*/
+    this.files = event.target.files;
+
+    for (var i = 0; i < this.files.length; i++) {
+      const file = this.files[i];
+      console.log(file);
+      /*let reader = new this.windowRef.nativeWindow.FileReader();
+      reader.onloadend = () => this.saveToIpfs(reader);
+      reader.readAsArrayBuffer(file);*/
+    }
+
+  }
+
+  list() {
+    this.product['images'] = this.hash;
+    console.log(this.product);
+    var data = new Buffer(JSON.stringify(this.product));
+    var path = "dMarketlist.json";
+    const stream = this.ipfs.files.addReadableStream();
+    stream.on('data', function (file) {
+      console.log(file);
+    });
+    stream.write({ path: path, content: data });
+    stream.end();
   }
 
   transHistory() {
