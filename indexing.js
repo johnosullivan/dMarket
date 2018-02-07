@@ -14,7 +14,7 @@ const publicKey = "0xfa5b6432308d45b54a1ce1373513fab77166436f";
 const web3url = "http://localhost:8545";
 const ipfsbase = "http://127.0.0.1:8080/ipfs/";
 const mongoDB = 'mongodb://127.0.0.1/ipfs_index';
-const contract_address = "0xfb88de099e13c3ed21f80a7a1e49f8caecf10df6";
+const contract_address = "0xf12b5dd4ead5f743c6baa640b0216200e89b60da";
 const abi = [{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"uint256"}],"name":"hashes","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"hash","type":"string"}],"name":"removeItem","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"hash","type":"string"}],"name":"listItem","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"paddress","type":"address"},{"indexed":false,"name":"ipfshash","type":"string"}],"name":"AddedListing","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"paddress","type":"address"},{"indexed":false,"name":"ipfshash","type":"string"}],"name":"DeactiveListing","type":"event"}];
 
 app.use(function(req, res, next) {
@@ -83,7 +83,7 @@ deEvent.watch(function(error, result){
 var router = express.Router();
 
 router.get('/search/:query', function(req, res){
-  console.log("Search: " + req.params.query);
+  //console.log("Search: " + req.params.query);
   var regexQuery = {
     name: new RegExp(req.params.query, 'i')
   }

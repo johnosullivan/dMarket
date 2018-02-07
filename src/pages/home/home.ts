@@ -7,6 +7,9 @@ import { UserProvider } from '../../providers/user/user';
 import { WindowRef } from '../../app/window';
 import { Platform } from 'ionic-angular';
 import { AddProductPage } from '../add-product/add-product';
+import { HttpClient } from '@angular/common/http';
+import { ConfigProvider } from '../../providers/config/config';
+
 
 import ipfsAPI from 'ipfs-api';
 declare const Buffer;
@@ -26,6 +29,8 @@ export class HomePage {
   files:any;
   hash:any;
 
+  search:any;
+
   constructor(
     public userProvider:UserProvider,
     private storage: Storage,
@@ -33,7 +38,9 @@ export class HomePage {
     public web3Provider:Web3Provider,
     public windowRef:WindowRef,
     public plt:Platform,
-    public modalCtrl:ModalController
+    public modalCtrl:ModalController,
+    public configProvider:ConfigProvider,
+    public http:HttpClient
   ) {
     this.balance = "";
     this.tempuser = "";
@@ -42,6 +49,8 @@ export class HomePage {
     this.product = {};
     this.files = [];
     this.hash = [];
+
+    this.search = '';
   }
 
   ionViewWillLeave() {
@@ -67,15 +76,22 @@ export class HomePage {
       })
     }
 
+    searchAction() {
+      console.log("Searching... ", this.search);
+      this.http.get(this.configProvider.Indexer_Address + '/search/' + this.search).subscribe(data => {
+        console.log("Results: ", data);
+      })
+    }
+
   uploadFile(event) {
     this.files = event.target.files;
 
     for (var i = 0; i < this.files.length; i++) {
       const file = this.files[i];
       console.log(file);
-      /*let reader = new this.windowRef.nativeWindow.FileReader();
+      let reader = new this.windowRef.nativeWindow.FileReader();
       reader.onloadend = () => this.saveToIpfs(reader);
-      reader.readAsArrayBuffer(file);*/
+      reader.readAsArrayBuffer(file);
     }
 
   }

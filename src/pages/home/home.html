@@ -26,4 +26,9 @@
 </ion-item>
 <br><br>
 <button ion-button color="dark" (click)="list()">List</button>
+<ion-item>
+  <ion-label color="nav" stacked>Search</ion-label>
+  <ion-input type="text" [(ngModel)]="search" placeholder=""></ion-input>
+</ion-item>
+<button ion-button color="dark" (click)="searchAction()">Search</button>
 </ion-content>
