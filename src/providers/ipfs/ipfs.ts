@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { UserProvider } from '../user/user';
+import { ConfigProvider } from '../config/config';
 
 //http://127.0.0.1:8080/ipfs/
 import ipfsAPI from 'ipfs-api';
@@ -13,7 +14,8 @@ export class IpfsProvider {
   ipfs:any;
   constructor(
     public http: HttpClient,
-    public storage:Storage
+    public storage:Storage,
+    public configProvider:ConfigProvider
   ) {
     this.ipfs = ipfsAPI('localhost', '5001', {protocol: 'http'});
   }
@@ -32,6 +34,30 @@ export class IpfsProvider {
       });
       stream.write({ path: path, content: data });
       stream.end();
+    });
+  }
+
+  getItem(item) {
+    console.log(item);
+    var self = this;
+    return new Promise(function (resolve, reject) {
+      self.http.get(self.configProvider.IPFS_Address + '/ipfs/' + item.hash).subscribe(data => {
+        for(var i = 0; i < data['images'].length; i++) {
+          data['images'][i] = self.configProvider.IPFS_Address + '/ipfs/' + data['images'][i];
+        }
+        resolve(data);
+      })
+    });
+  }
+
+  getListing(items) {
+    var self = this;
+    return new Promise(function (resolve, reject) {
+      var promises = [];
+      for(var i = 0; i < items.length; i++) { promises.push(self.getItem(items[i])); }
+      Promise.all(promises).then(function(items) {
+        resolve(items);
+      });
     });
   }
 

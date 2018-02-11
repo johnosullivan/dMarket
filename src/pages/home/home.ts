@@ -9,7 +9,7 @@ import { Platform } from 'ionic-angular';
 import { AddProductPage } from '../add-product/add-product';
 import { HttpClient } from '@angular/common/http';
 import { ConfigProvider } from '../../providers/config/config';
-
+import { IpfsProvider } from '../../providers/ipfs/ipfs';
 
 import ipfsAPI from 'ipfs-api';
 declare const Buffer;
@@ -31,6 +31,8 @@ export class HomePage {
 
   search:any;
 
+  items:any;
+
   constructor(
     public userProvider:UserProvider,
     private storage: Storage,
@@ -40,7 +42,8 @@ export class HomePage {
     public plt:Platform,
     public modalCtrl:ModalController,
     public configProvider:ConfigProvider,
-    public http:HttpClient
+    public http:HttpClient,
+    public ipfsProvider:IpfsProvider
   ) {
     this.balance = "";
     this.tempuser = "";
@@ -51,15 +54,52 @@ export class HomePage {
     this.hash = [];
 
     this.search = '';
+
+    this.items = [];
   }
 
   ionViewWillLeave() {
 
   }
 
+  getList() {
+    this.ipfsProvider.getListing("QmV6Ccw4XsSU8o11Ksso8uxsgiutPdBeDJCuqYxQ1xV7qm").then((data) => {
+      console.log(data);
+      //this.item = data;
+    });
+  }
+
+  getLink(address) {
+    console.log(address);
+    return this.configProvider.IPFS_Address + '/ipfs/' + address;
+  }
+
   add() {
     let addModal = this.modalCtrl.create(AddProductPage, { }, { enableBackdropDismiss: false });
     addModal.present();
+  }
+
+  searchByKeyword(event) {
+    console.log("Searching... ", this.search);
+    this.http.get(this.configProvider.Indexer_Address + '/search/' + this.search).subscribe(data => {
+      console.log("Raw... ", data);
+      this.ipfsProvider.getListing(data).then((items) => {
+        console.log("Results: ", items);
+        this.items = items;
+      });
+    });
+  }
+
+  getImage(item) {
+    if (item['images'].length !== 0) {
+      return item['images'][0];
+    }
+    return "http://clipground.com/images/picture-not-available-clipart-12.jpg";
+  }
+
+  onCancel(event) {
+    this.search = '';
+    this.items = [];
   }
 
   saveToIpfs (reader) {
@@ -78,9 +118,14 @@ export class HomePage {
 
     searchAction() {
       console.log("Searching... ", this.search);
+      //var self = this;
       this.http.get(this.configProvider.Indexer_Address + '/search/' + this.search).subscribe(data => {
-        console.log("Results: ", data);
-      })
+        console.log("Raw... ", data);
+        this.ipfsProvider.getListing(data).then((items) => {
+          console.log("Results: ", items);
+          console.log(this.items);
+        });
+      });
     }
 
   uploadFile(event) {

@@ -4,31 +4,27 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>dMarket</ion-title>
+    <ion-buttons end>
+            <button ion-button icon-only (click)="cart()">
+              0 <ion-icon name="cart"></ion-icon>
+            </button>
+          </ion-buttons>
   </ion-navbar>
+
+<ion-toolbar no-border-top color="nav">
+   <ion-searchbar [(ngModel)]="search" placeholder="Search" (search)="searchByKeyword($event)" [showCancelButton]="true" (ionCancel)="onCancel($event)"></ion-searchbar>
+</ion-toolbar>
+
 </ion-header>
-<ion-content padding style="background-color:#eee;">
-<button ion-button color="dark" (click)="transHistory()">TXS_HISTORY</button>
-<button ion-button color="dark" (click)="add()">Add</button>
-<br><br>
-<input id="file-field" name="file-field" (change)="uploadFile($event)" type="file" multiple>
-<br><br>
-<ion-item>
-  <ion-label color="nav" stacked>Product Name</ion-label>
-  <ion-input type="text" [(ngModel)]="product.name" placeholder=""></ion-input>
-</ion-item>
-<ion-item>
-  <ion-label color="nav" stacked>Description</ion-label>
-  <ion-input type="text" [(ngModel)]="product.description" placeholder=""></ion-input>
-</ion-item>
-<ion-item>
-  <ion-label color="nav" stacked>Price</ion-label>
-  <ion-input type="text" [(ngModel)]="product.price" placeholder=""></ion-input>
-</ion-item>
-<br><br>
-<button ion-button color="dark" (click)="list()">List</button>
-<ion-item>
-  <ion-label color="nav" stacked>Search</ion-label>
-  <ion-input type="text" [(ngModel)]="search" placeholder=""></ion-input>
-</ion-item>
-<button ion-button color="dark" (click)="searchAction()">Search</button>
+<ion-content style="background-color:#eee;">
+  <ion-list>
+    <button ion-item *ngFor="let item of items">
+      <ion-thumbnail item-start>
+        <img src="{{getImage(item)}}">
+      </ion-thumbnail>
+      <h2>{{item.name}}</h2>
+      <p>{{item.price}} dMT</p>
+      <!--<button ion-button clear item-end>View</button>-->
+    </button>
+  </ion-list>
 </ion-content>
