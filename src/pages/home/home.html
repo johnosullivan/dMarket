@@ -6,7 +6,7 @@
     <ion-title>dMarket</ion-title>
     <ion-buttons end>
             <button ion-button icon-only (click)="cart()">
-              0 <ion-icon name="cart"></ion-icon>
+              {{ cartProvider['mycart'].length }} <ion-icon name="cart"></ion-icon>
             </button>
           </ion-buttons>
   </ion-navbar>
@@ -18,7 +18,7 @@
 </ion-header>
 <ion-content style="background-color:#eee;">
   <ion-list>
-    <button ion-item *ngFor="let item of items">
+    <button ion-item *ngFor="let item of items" (click)="details(item)">
       <ion-thumbnail item-start>
         <img src="{{getImage(item)}}">
       </ion-thumbnail>

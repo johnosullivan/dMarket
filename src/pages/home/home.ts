@@ -10,6 +10,9 @@ import { AddProductPage } from '../add-product/add-product';
 import { HttpClient } from '@angular/common/http';
 import { ConfigProvider } from '../../providers/config/config';
 import { IpfsProvider } from '../../providers/ipfs/ipfs';
+import { ItemDetailsPage } from '../item-details/item-details';
+
+import { CartProvider } from '../../providers/cart/cart';
 
 import ipfsAPI from 'ipfs-api';
 declare const Buffer;
@@ -43,7 +46,8 @@ export class HomePage {
     public modalCtrl:ModalController,
     public configProvider:ConfigProvider,
     public http:HttpClient,
-    public ipfsProvider:IpfsProvider
+    public ipfsProvider:IpfsProvider,
+    public cartProvider:CartProvider
   ) {
     this.balance = "";
     this.tempuser = "";
@@ -67,6 +71,10 @@ export class HomePage {
       console.log(data);
       //this.item = data;
     });
+  }
+
+  details(item) {
+    this.navCtrl.push(ItemDetailsPage, { 'item':item });
   }
 
   getLink(address) {
@@ -99,7 +107,7 @@ export class HomePage {
 
   onCancel(event) {
     this.search = '';
-    this.items = [];
+    //this.items = [];
   }
 
   saveToIpfs (reader) {

@@ -24,6 +24,9 @@ import { UserProvider } from '../providers/user/user';
 import { IpfsProvider } from '../providers/ipfs/ipfs';
 import { WindowRef } from './window';
 
+import { ItemDetailsPage } from '../pages/item-details/item-details';
+import { CartProvider } from '../providers/cart/cart';
+
 /*
 android -> on a device running Android.
 cordova ->	on a device running Cordova.
@@ -47,7 +50,8 @@ windows -> on a device running Windows.
     SendMarkPage,
     ComfirmSendPage,
     ListingPage,
-    AddProductPage
+    AddProductPage,
+    ItemDetailsPage
   ],
   imports: [
     BrowserModule,
@@ -65,7 +69,8 @@ windows -> on a device running Windows.
     SendMarkPage,
     ComfirmSendPage,
     ListingPage,
-    AddProductPage
+    AddProductPage,
+    ItemDetailsPage
   ],
   providers: [
     StatusBar,
@@ -76,7 +81,8 @@ windows -> on a device running Windows.
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserProvider,
     IpfsProvider,
-    WindowRef
+    WindowRef,
+    CartProvider
   ]
 })
 export class AppModule {}
