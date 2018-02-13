@@ -13,6 +13,8 @@ import { IpfsProvider } from '../../providers/ipfs/ipfs';
 import { ItemDetailsPage } from '../item-details/item-details';
 
 import { CartProvider } from '../../providers/cart/cart';
+import { MyCartPage } from '../my-cart/my-cart';
+
 
 import ipfsAPI from 'ipfs-api';
 declare const Buffer;
@@ -64,6 +66,11 @@ export class HomePage {
 
   ionViewWillLeave() {
 
+  }
+
+  cart() {
+    let cartModal = this.modalCtrl.create(MyCartPage, { }, { enableBackdropDismiss: false });
+    cartModal.present();
   }
 
   getList() {

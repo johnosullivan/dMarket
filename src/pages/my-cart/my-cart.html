@@ -1,0 +1,33 @@
+<ion-header>
+
+  <ion-navbar color="nav">
+    <ion-title>My Cart</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="closeModal()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content style="background-color:#eee;">
+
+<ion-list>
+  <ion-list-header>
+   My Order
+  </ion-list-header>
+  <ion-item *ngFor="let item of items">
+    <!--<ion-thumbnail item-start>
+      <img src="{{getImage(item)}}">
+    </ion-thumbnail>-->
+    <h2>{{item['product'].name}}</h2>
+    <p>{{item['product'].price}} dMT - Quantity: {{item.quantity}} </p>
+  </ion-item>
+  <ion-list-header>
+   Total: {{total}}
+  </ion-list-header>
+</ion-list>
+
+</ion-content>

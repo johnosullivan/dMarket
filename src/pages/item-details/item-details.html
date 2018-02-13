@@ -3,15 +3,49 @@
   <ion-navbar color="nav">
     <ion-title>{{item.name}}</ion-title>
     <ion-buttons end>
-            <button ion-button icon-only (click)="cart()">
+      <button ion-button icon-only (click)="cart()">
               {{ cartProvider['mycart'].length }} <ion-icon name="cart"></ion-icon>
             </button>
-          </ion-buttons>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content style="background-color:#eee;">
-  <button ion-button color="nav" full (click)="addCart()">addCart</button>
+
+  <ion-card>
+    <div style="padding-left: 100px; padding-right: 100px; padding-top: 10px;">
+      <img src="{{getImage(item)}}">
+    </div>
+    <ion-card-header>
+      {{item.name}} - <small>{{item.price}} dMT</small>
+    </ion-card-header>
+    <ion-card-content>
+      {{item.description}}
+
+
+      <ion-list>
+        <ion-item>
+
+          <ion-label>Quantity</ion-label>
+          <ion-select [(ngModel)]="count">
+            <ion-option value="1">1</ion-option>
+            <ion-option value="2">2</ion-option>
+            <ion-option value="3">3</ion-option>
+            <ion-option value="4">4</ion-option>
+            <ion-option value="5">5</ion-option>
+            <ion-option value="6">6</ion-option>
+            <ion-option value="7">7</ion-option>
+            <ion-option value="8">8</ion-option>
+            <ion-option value="9">9</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+
+    </ion-card-content>
+    <div padding>
+      <button ion-button color="nav" full (click)="addCart()">Add {{count}}</button>
+    </div>
+  </ion-card>
 </ion-content>

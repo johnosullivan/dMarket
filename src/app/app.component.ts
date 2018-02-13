@@ -11,6 +11,8 @@ import { SendMarkPage } from '../pages/send-mark/send-mark';
 import { UserProvider } from '../providers/user/user';
 import { ListingPage } from '../pages/listing/listing';
 
+import { ItemDetailsPage } from '../pages/item-details/item-details';
+
 @Component({
   templateUrl: 'app.html'
 })
