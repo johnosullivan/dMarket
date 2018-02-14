@@ -14,20 +14,89 @@
 
 <ion-content style="background-color:#eee;">
 
-<ion-list>
-  <ion-list-header>
-   My Order
-  </ion-list-header>
-  <ion-item *ngFor="let item of items">
-    <!--<ion-thumbnail item-start>
-      <img src="{{getImage(item)}}">
-    </ion-thumbnail>-->
-    <h2>{{item['product'].name}}</h2>
-    <p>{{item['product'].price}} dMT - Quantity: {{item.quantity}} </p>
-  </ion-item>
-  <ion-list-header>
-   Total: {{total}}
-  </ion-list-header>
-</ion-list>
+  <ion-card>
+    <ion-list>
+      <ion-list-header>
+        My Order
+      </ion-list-header>
+      <ion-item *ngFor="let item of items">
+        <ion-thumbnail item-start>
+          <img src="{{getImage(item['product'])}}">
+        </ion-thumbnail>
+        <h2>{{item['product'].name}}</h2>
+        <p>{{item['product'].price}} dMT - Quantity: {{item.quantity}} </p>
+      </ion-item>
+      <ion-list-header>
+        Total: {{total}}
+      </ion-list-header>
+    </ion-list>
+  </ion-card>
+
+  <ion-card>
+    <ion-list>
+      <ion-list-header>
+        Shipping Details
+      </ion-list-header>
+        
+    </ion-list>
+  </ion-card>
+
+  <ion-card>
+    <ion-list>
+      <ion-list-header>
+        Payment
+      </ion-list-header>
+    </ion-list>
+  </ion-card>
+
+  <!--<ion-card>
+    <ion-list>
+      <ion-list-header>
+        Shipping Details
+      </ion-list-header>
+      <ion-item>
+        <ion-label color="nav" stacked>Full Name</ion-label>
+        <ion-input type="text" placeholder=""></ion-input>
+      </ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item style="padding-left:6px;">
+              <ion-label color="nav" stacked>Address</ion-label>
+              <ion-input type="text" placeholder=""></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label color="nav" stacked>Apt. Unit (Optional)</ion-label>
+              <ion-input type="text" placeholder=""></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item style="padding-left:6px;">
+              <ion-label color="nav" stacked>City</ion-label>
+              <ion-input type="text" placeholder=""></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label color="nav" stacked>State</ion-label>
+              <ion-input type="text" placeholder=""></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label color="nav" stacked>Zip</ion-label>
+              <ion-input type="text" placeholder=""></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+  </ion-card>-->
 
 </ion-content>

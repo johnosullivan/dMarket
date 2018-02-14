@@ -114,7 +114,7 @@ export class HomePage {
 
   onCancel(event) {
     this.search = '';
-    //this.items = [];
+    this.items = [];
   }
 
   saveToIpfs (reader) {

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ConfigProvider } from '../config/config';
 import { IpfsProvider } from '../ipfs/ipfs';
 import { Web3Provider } from '../../providers/web3/web3';
+import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class UserProvider {
@@ -12,7 +13,8 @@ export class UserProvider {
     public web3Provider:Web3Provider,
     public ipfsProvider:IpfsProvider,
     public http: HttpClient,
-    public configProvider:ConfigProvider
+    public configProvider:ConfigProvider,
+    public storage:Storage
   ) {
     this.user_data = {};
   }
@@ -45,6 +47,25 @@ export class UserProvider {
     this.ipfsProvider.update(this.web3Provider.paddress, this.user_data).then((hash) => {
       this.getProfile(hash);
     });
+  }
+
+  getAddresses() {
+    var self = this;
+    return new Promise(function (resolve, reject) {
+      self.storage.get('addresses').then((addresses) => {
+        resolve(addresses);
+      });
+    });
+  }
+
+  setAddresses() {
+    var temp = [];
+
+    temp.push({"address":"723 Ouilmette Ln.","apt":"","city":"Wilmette","state":"IL","zip":"60091"});
+
+    temp.push({"address":"40 E Oak St.","apt":"1511","city":"Chiccago","state":"IL","zip":"60611"});
+
+    this.storage.set("addresses",temp);
   }
 
 }

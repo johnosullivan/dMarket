@@ -27,6 +27,7 @@ import { WindowRef } from './window';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { CartProvider } from '../providers/cart/cart';
 import { MyCartPage } from '../pages/my-cart/my-cart';
+import { MySettingsPage } from '../pages/my-settings/my-settings';
 
 /*
 android -> on a device running Android.
@@ -53,7 +54,8 @@ windows -> on a device running Windows.
     ListingPage,
     AddProductPage,
     ItemDetailsPage,
-    MyCartPage
+    MyCartPage,
+    MySettingsPage
   ],
   imports: [
     BrowserModule,
@@ -73,7 +75,8 @@ windows -> on a device running Windows.
     ListingPage,
     AddProductPage,
     ItemDetailsPage,
-    MyCartPage
+    MyCartPage,
+    MySettingsPage
   ],
   providers: [
     StatusBar,

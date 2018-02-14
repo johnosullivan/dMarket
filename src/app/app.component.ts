@@ -12,6 +12,7 @@ import { UserProvider } from '../providers/user/user';
 import { ListingPage } from '../pages/listing/listing';
 
 import { ItemDetailsPage } from '../pages/item-details/item-details';
+import { MySettingsPage } from '../pages/my-settings/my-settings';
 
 @Component({
   templateUrl: 'app.html'
@@ -40,7 +41,8 @@ export class MyApp {
     this.pages = [
       { title: 'Search', component: HomePage },
       { title: 'My Listings', component: ListingPage },
-      { title: 'Transaction History', component: HomePage }
+      { title: 'Transaction History', component: HomePage },
+      { title: 'Settings', component: MySettingsPage }
     ];
 
     this.storage.get('account').then((account) => {
