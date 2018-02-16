@@ -26,9 +26,6 @@
         <h2>{{item['product'].name}}</h2>
         <p>{{item['product'].price}} dMT - Quantity: {{item.quantity}} </p>
       </ion-item>
-      <ion-list-header>
-        Total: {{total}}
-      </ion-list-header>
     </ion-list>
   </ion-card>
 
@@ -37,7 +34,16 @@
       <ion-list-header>
         Shipping Details
       </ion-list-header>
-        
+
+      <ion-item>
+        <ion-label>Select Shipping Address</ion-label>
+        <ion-select [(ngModel)]="address" multiple="false">
+          <ion-option *ngFor="let item of addresses">{{item.address}} {{item.apt}} {{item.city}} {{item.state}} {{item.zip}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+
+
     </ion-list>
   </ion-card>
 
@@ -45,6 +51,15 @@
     <ion-list>
       <ion-list-header>
         Payment
+      </ion-list-header>
+      <ion-list-header>
+        Available: {{web3Provider.dDT}}
+      </ion-list-header>
+      <ion-list-header>
+        Total: {{total}}
+      </ion-list-header>
+      <ion-list-header>
+        Remaining: {{web3Provider.dDT - total}}
       </ion-list-header>
     </ion-list>
   </ion-card>
