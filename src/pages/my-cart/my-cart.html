@@ -25,6 +25,7 @@
         </ion-thumbnail>
         <h2>{{item['product'].name}}</h2>
         <p>{{item['product'].price}} dMT - Quantity: {{item.quantity}} </p>
+        <button ion-button clear item-end (click)="deleteAtIndex(i,item)">Edit</button>
       </ion-item>
     </ion-list>
   </ion-card>
@@ -52,7 +53,8 @@
       <ion-list-header>
         Payment
       </ion-list-header>
-      <ion-list-header>
+
+      <!--<ion-list-header>
         Available: {{web3Provider.dDT}}
       </ion-list-header>
       <ion-list-header>
@@ -60,7 +62,7 @@
       </ion-list-header>
       <ion-list-header>
         Remaining: {{web3Provider.dDT - total}}
-      </ion-list-header>
+      </ion-list-header>-->
     </ion-list>
   </ion-card>
 

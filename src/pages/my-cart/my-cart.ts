@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { CartProvider } from '../../providers/cart/cart';
 import { UserProvider } from '../../providers/user/user';
 import { Web3Provider } from '../../providers/web3/web3';
+import { AlertController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -11,27 +12,26 @@ import { Web3Provider } from '../../providers/web3/web3';
 })
 export class MyCartPage {
 
-  items:any;
-  total:any;
-  addresses:any;
-  address:any;
+  items: any;
+  total: any;
+  addresses: any;
+  address: any;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public viewController:ViewController,
-    public cartProvider:CartProvider,
-    public userProvider:UserProvider,
-    public web3Provider:Web3Provider
+    public viewController: ViewController,
+    public cartProvider: CartProvider,
+    public userProvider: UserProvider,
+    public web3Provider: Web3Provider,
+    private alertCtrl: AlertController
   ) {
     this.items = cartProvider.mycart;
     this.total = 0;
     this.addresses = [];
     this.address = {};
 
-    for (var i = 0; i < this.items.length; i++) {
-      this.total += (parseInt(this.items[i].product['price']) * this.items[i].quantity);
-    }
+    this.findTotal();
 
     this.userProvider.getAddresses().then((list) => {
       console.log("Address: ", list);
@@ -43,8 +43,83 @@ export class MyCartPage {
 
   }
 
+  findTotal() {
+    for (var i = 0; i < this.items.length; i++) {
+      this.total += (parseInt(this.items[i].product['price']) * this.items[i].quantity);
+    }
+  }
+
+  deleteAtIndex(index, item) {
+    console.log(item);
+    let prompt = this.alertCtrl.create({
+      title: 'Quantity',
+      message: 'Select Quantity',
+      inputs: [
+        {
+          type: 'radio',
+          label: 'Delete',
+          value: '0'
+        },
+        {
+          type: 'radio',
+          label: '1',
+          value: '1'
+        },{
+          type: 'radio',
+          label: '2',
+          value: '2'
+        },{
+          type: 'radio',
+          label: '3',
+          value: '3'
+        },{
+          type: 'radio',
+          label: '4',
+          value: '4'
+        },{
+          type: 'radio',
+          label: '5',
+          value: '5'
+        },{
+          type: 'radio',
+          label: '6',
+          value: '6'
+        },{
+          type: 'radio',
+          label: '7',
+          value: '7'
+        },{
+          type: 'radio',
+          label: '8',
+          value: '8'
+        },{
+          type: 'radio',
+          label: '9',
+          value: '9'
+        },{
+          type: 'radio',
+          label: '10',
+          value: '10'
+        }],
+      buttons: [
+        {
+          text: "Cancel",
+          handler: data => {
+          }
+        },
+        {
+          text: "Set",
+          handler: data => {
+            console.log(data);
+          }
+        }]
+    });
+    prompt.present();
+
+  }
+
   closeModal() {
-    this.viewController.dismiss({status:false});
+    this.viewController.dismiss({ status: false });
   }
 
   getImage(item) {
