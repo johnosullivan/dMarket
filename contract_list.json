@@ -1,0 +1,12 @@
+{
+  "deployTo": {
+    
+  },
+  "contracts": [
+    {
+      "name":"",
+      "contract_name":"",
+      "path":""
+    }
+  ]
+}

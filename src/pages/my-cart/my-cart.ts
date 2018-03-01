@@ -29,7 +29,7 @@ export class MyCartPage {
     this.items = cartProvider.mycart;
     this.total = 0;
     this.addresses = [];
-    this.address = {};
+    this.address = '';
 
     this.findTotal();
 
@@ -44,7 +44,27 @@ export class MyCartPage {
   }
 
   order() {
-    this.web3Provider.createOrder();
+    console.log("Order: ",this.items);
+    console.log("Address: ",this.address);
+
+    var size = this.items.length;
+    var quantities = [];
+    var costs = [];
+    var owners = [];
+    var pids = "";
+
+    for (var i = 0; i < this.items.length; i++) {
+      quantities.push(this.items[i].quantity);
+      costs.push(parseInt(this.items[i].product['price']));
+
+      owners.push(this.items[i].product['owner']);
+
+      pids =  pids + (this.items[i].product['productID'] + '-');
+    }
+
+    console.log(owners);
+
+    this.web3Provider.createOrder(this.address,size,costs,quantities,owners,pids);
   }
 
   findTotal() {

@@ -59,10 +59,24 @@ export class Web3Provider {
     this.privateaddress = val;
   }
 
-  createOrder() {
+  createOrder(
+    address,
+    size,
+    costs,
+    quantities,
+    owners,
+    pids
+  ) {
     var ordercontract = this.web3.eth.contract(this.abiProvider.ORDER_ABI);
     var order = ordercontract.at(this.configProvider.dORDER_Address);
-    order.createOrder("40 E Oak Street Chicago IL 60611",2,[100,200],[1,2],["0x821aEa9a577a9b44299B9c15c88cf3087F3b5544","0x0d1d4e623D10F9FBA5Db95830F7d3839406C6AF2"],"BUBDJKDNKNDKSMJWKENK987-ZSXKMJDDKNKXSJNKXJNSNKSX-",{ from: this.paddress, gas: "3000000" },function(err, res){
+    order.createOrder(
+      address,
+      size,
+      costs,
+      quantities,
+      owners,
+      pids
+    ,{ from: this.paddress, gas: "3000000" },function(err, res){
         if (err){
           console.log(err);
         } else{

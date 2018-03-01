@@ -1,4 +1,40 @@
-pragma solidity ^0.4.16;
+/*
+ * @title String & slice utility library for Solidity contracts.
+ * @author Nick Johnson <arachnid@notdot.net>
+ *
+ * @dev Functionality in this library is largely implemented using an
+ *      abstraction called a 'slice'. A slice represents a part of a string -
+ *      anything from the entire string to a single character, or even no
+ *      characters at all (a 0-length slice). Since a slice only has to specify
+ *      an offset and a length, copying and manipulating slices is a lot less
+ *      expensive than copying and manipulating the strings they reference.
+ *
+ *      To further reduce gas costs, most functions on slice that need to return
+ *      a slice modify the original one instead of allocating a new one; for
+ *      instance, `s.split(".")` will return the text up to the first '.',
+ *      modifying s to only contain the remainder of the string after the '.'.
+ *      In situations where you do not want to modify the original slice, you
+ *      can make a copy first with `.copy()`, for example:
+ *      `s.copy().split(".")`. Try and avoid using this idiom in loops; since
+ *      Solidity has no memory management, it will result in allocating many
+ *      short-lived slices that are later discarded.
+ *
+ *      Functions that return two slices come in two versions: a non-allocating
+ *      version that takes the second slice as an argument, modifying it in
+ *      place, and an allocating version that allocates and returns the second
+ *      slice; see `nextRune` for example.
+ *
+ *      Functions that have to copy string data will return strings rather than
+ *      slices; these can be cast back to slices for further processing if
+ *      required.
+ *
+ *      For convenience, some functions are provided with non-modifying
+ *      variants that create a new slice and return both; for instance,
+ *      `s.splitNew('.')` leaves s unmodified, and returns two values
+ *      corresponding to the left and right parts of the string.
+ */
+
+pragma solidity ^0.4.14;
 
 library strings {
     struct slice {
@@ -671,101 +707,5 @@ library strings {
         }
 
         return ret;
-    }
-}
-
-
-// "40 E Oak Street Chicago IL 60611",2,[100,200],[1,2],["0x821aEa9a577a9b44299B9c15c88cf3087F3b5544","0x0d1d4e623D10F9FBA5Db95830F7d3839406C6AF2"],"BUBDJKDNKNDKSMJWKENK987-ZSXKMJDDKNKXSJNKXJNSNKSX-"
-
-contract OrderManager {
-
-    function OrderManager() public { }
-
-    address[] orders;
-
-    event CreateOrder(address order, address buyer, address[] sellers);
-
-    function createOrder(
-        string _shippingaddress, uint _ordersize,
-        uint[] _cost, uint[] _quantity, address[] _addresses,
-        string _productIDs
-    ) public {
-        address order = new Order(msg.sender,_shippingaddress, _ordersize, _cost, _quantity, _addresses, _productIDs);
-        orders.push(order);
-        CreateOrder(order,msg.sender,_addresses);
-    }
-
-}
-
-contract OwnerShip {
-    // The customer who is creating the order
-    address public buyer;
-    // The mapping of the sellers who are allowed to access this order
-    mapping (address => bool) public sellers;
-    // Modifier for the onlybuyer functions
-    modifier onlyBuyer { require(msg.sender == buyer); _; }
-    // Modifier for the onlyseller functions
-    modifier onlySeller { require(sellers[msg.sender]); _; }
-    // A conditional modifier for the methods
-    modifier condition(bool _condition) { require(_condition); _; }
-    // To transfer ordership of order to different address
-    function transferOrderOwnership(address newBuyer) onlyBuyer public { buyer = newBuyer; }
-}
-
-contract Order is OwnerShip {
-    // Using the import string library for spliting product ids
-    using strings for *;
-    // Status codes for the ownership contract
-    enum StatusCodes { NULL, SUCCESS, ERROR, NOT_FOUND, PENDING, PROCESSING, PROCESSED, SHIPPED, DELIVERED, INSUFFICIENT_BALANCE }
-    // OrderItem struct
-    struct OrderItem {
-        string productID;
-        uint costs;
-        uint quantity;
-        address seller;
-        StatusCodes status;
-    }
-    // All the orders items
-    OrderItem[] public items;
-    uint public ordersize;
-    // Where the items should be sent
-    string public shippingaddress;
-    // Public constructor
-    function Order (
-        address _buyer,
-        string _shippingaddress, uint _ordersize,
-        uint[] _cost, uint[] _quantity, address[] _addresses,
-        string _productIDs
-    ) public {
-        buyer = _buyer;
-        // Sets the order details
-        shippingaddress = _shippingaddress;
-        ordersize = _ordersize;
-        // Split the array for products
-        var s = _productIDs.toSlice();
-        var osize = "-".toSlice();
-        var products = new string[](s.count(osize));
-        // Adds orderitems to struct array
-        for(uint x = 0; x < products.length; x++) {
-            address the_seller = _addresses[x];
-            items.push(OrderItem({
-                productID:s.split(osize).toString(), costs:_cost[x],
-                quantity:_quantity[x], seller:the_seller,
-                status: StatusCodes.PROCESSED
-            }));
-            sellers[the_seller] = true;
-        }
-    }
-
-    function setSeller(address _seller, bool _bool) onlyBuyer public {
-        sellers[_seller] = _bool;
-    }
-
-    function isMyOrder() onlyBuyer public constant returns (bool res) {
-        return true;
-    }
-
-    function hasProduct() public constant returns (bool status) {
-        return sellers[msg.sender];
     }
 }

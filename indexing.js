@@ -15,12 +15,12 @@ const web3url = "http://localhost:8545";
 const ipfsbase = "http://127.0.0.1:8080/ipfs/";
 const mongoDB = 'mongodb://127.0.0.1/ipfs_index';
 
-const contract_address = "0xf12b5dd4ead5f743c6baa640b0216200e89b60da";
-const orders_address = "0x345ca3e014aaf5dca488057592ee47305d9b3e10";
+const contract_address = "0x345ca3e014aaf5dca488057592ee47305d9b3e10";
+const orders_address = "0x434d0de0cc2dd39296eb41d917326fa7316eec28";
 
 const abi =  [{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"uint256"}],"name":"hashes","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"hash","type":"string"}],"name":"removeItem","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"hash","type":"string"}],"name":"listItem","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"paddress","type":"address"},{"indexed":false,"name":"ipfshash","type":"string"}],"name":"AddedListing","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"paddress","type":"address"},{"indexed":false,"name":"ipfshash","type":"string"}],"name":"DeactiveListing","type":"event"}];
 
-const orders_abi = [{"constant":false,"inputs":[{"name":"_shippingaddress","type":"string"},{"name":"_ordersize","type":"uint256"},{"name":"_cost","type":"uint256[]"},{"name":"_quantity","type":"uint256[]"},{"name":"_addresses","type":"address[]"},{"name":"_productIDs","type":"string"}],"name":"createOrder","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"order","type":"address"},{"indexed":false,"name":"buyer","type":"address"},{"indexed":false,"name":"sellers","type":"address[]"}],"name":"CreateOrder","type":"event"}]
+const orders_abi = [{"constant":false,"inputs":[{"name":"_shippingaddress","type":"string"},{"name":"_ordersize","type":"uint256"},{"name":"_cost","type":"uint256[]"},{"name":"_quantity","type":"uint256[]"},{"name":"_addresses","type":"address[]"},{"name":"_productIDs","type":"string"}],"name":"createOrder","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"order","type":"address"},{"indexed":false,"name":"buyer","type":"address"},{"indexed":false,"name":"sellers","type":"address[]"}],"name":"CreateOrder","type":"event"}];
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
