@@ -43,6 +43,10 @@ export class MyCartPage {
 
   }
 
+  order() {
+    this.web3Provider.createOrder();
+  }
+
   findTotal() {
     for (var i = 0; i < this.items.length; i++) {
       this.total += (parseInt(this.items[i].product['price']) * this.items[i].quantity);
