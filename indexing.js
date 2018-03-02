@@ -15,8 +15,8 @@ const web3url = "http://localhost:8545";
 const ipfsbase = "http://127.0.0.1:8080/ipfs/";
 const mongoDB = 'mongodb://127.0.0.1/ipfs_index';
 
-const contract_address = "0x345ca3e014aaf5dca488057592ee47305d9b3e10";
-const orders_address = "0x434d0de0cc2dd39296eb41d917326fa7316eec28";
+const contract_address = "0x8cdaf0cd259887258bc13a92c0a6da92698644c0";
+const orders_address = "0xf12b5dd4ead5f743c6baa640b0216200e89b60da";
 
 const abi =  [{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"uint256"}],"name":"hashes","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"hash","type":"string"}],"name":"removeItem","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"hash","type":"string"}],"name":"listItem","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"paddress","type":"address"},{"indexed":false,"name":"ipfshash","type":"string"}],"name":"AddedListing","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"paddress","type":"address"},{"indexed":false,"name":"ipfshash","type":"string"}],"name":"DeactiveListing","type":"event"}];
 
@@ -41,9 +41,27 @@ const provider = new Web3.providers.HttpProvider(web3url)
 const web3 = new Web3(provider)
 web3.eth.defaultAccount = publicKey;
 
-var ListSchema = new mongoose.Schema({ name: String, hash: String, address: String, created: Date, updated: Date });
+var ListSchema = new mongoose.Schema({
+   name: String,
+   hash: String,
+   address: String,
+   created: Date,
+   updated: Date
+});
+
 ListSchema.index({ name: 'text'});
 var ListModel = mongoose.model('Listing', ListSchema);
+
+var OrderSchema = new mongoose.Schema({
+   transactionHash: String,
+   sellers: Array,
+   buyer: String,
+   order: String,
+   created: Date,
+   updated: Date
+});
+
+var OrderModel = mongoose.model('Orders', OrderSchema);
 
 var HttpClient = function() {
     this.get = function(uri, callback) {
@@ -95,7 +113,19 @@ const orders = orderContract.at(orders_address);
 var new_order = orders.CreateOrder()
 
 new_order.watch(function(error, ev){
-    console.log(JSON.stringify(ev));
+   var order = ev;
+   var orderDoc = new OrderModel({
+     transactionHash: order.transactionHash,
+     sellers: order["args"].sellers,
+     buyer: order["args"].buyer,
+     order: order["args"].order,
+     created: new Date(),
+     updated: new Date()
+   });
+   orderDoc.save(function (err) {
+     if (err) return console.log(err);
+     console.log(orderDoc);
+   });
 });
 
 var router = express.Router();

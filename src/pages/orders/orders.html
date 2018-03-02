@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar color="nav">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Orders</ion-title>
+    <ion-buttons end>
+            <button ion-button icon-only (click)="cart()">
+              {{ cartProvider['mycart'].length }} <ion-icon name="cart"></ion-icon>
+            </button>
+          </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content style="background-color:#eee;">
+
+</ion-content>

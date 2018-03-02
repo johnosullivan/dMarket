@@ -10,7 +10,7 @@ const list = JSON.parse(configs);
 console.log(list);
 
 
-/*
+
 const input_dmt = fs.readFileSync('contracts/dMT.sol');
 const output_dmt = solc.compile(input_dmt.toString(), 1);
 const bytecode_dmt = output_dmt.contracts[':dMark'].bytecode;
@@ -102,4 +102,3 @@ web3.eth.sendRawTransaction(serializedTx_dmt.toString('hex'), (err, hash) => {
   console.log('Contract DMT Creation TX: ' + hash);
   waitForTransactionReceiptDMT(hash);
 });
-*/

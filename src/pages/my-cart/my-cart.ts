@@ -65,6 +65,8 @@ export class MyCartPage {
     console.log(owners);
 
     this.web3Provider.createOrder(this.address,size,costs,quantities,owners,pids);
+    this.cartProvider.mycart = [];
+    this.closeModal();
   }
 
   findTotal() {

@@ -28,6 +28,7 @@ import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { CartProvider } from '../providers/cart/cart';
 import { MyCartPage } from '../pages/my-cart/my-cart';
 import { MySettingsPage } from '../pages/my-settings/my-settings';
+import { OrdersPage } from '../pages/orders/orders';
 
 /*
 android -> on a device running Android.
@@ -55,7 +56,8 @@ windows -> on a device running Windows.
     AddProductPage,
     ItemDetailsPage,
     MyCartPage,
-    MySettingsPage
+    MySettingsPage,
+    OrdersPage
   ],
   imports: [
     BrowserModule,
@@ -76,7 +78,8 @@ windows -> on a device running Windows.
     AddProductPage,
     ItemDetailsPage,
     MyCartPage,
-    MySettingsPage
+    MySettingsPage,
+    OrdersPage
   ],
   providers: [
     StatusBar,
