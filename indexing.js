@@ -140,6 +140,15 @@ router.get('/search/:query', function(req, res){
   });
 });
 
+router.get('/order/:pubadress', function(req, res){
+  var regexQuery = {
+    buyer: req.params.pubadress
+  }
+  OrderModel.find(regexQuery).exec(function(err, results) {
+    res.json(results);
+  });
+});
+
 app.use('/api', router);
 
 server.listen(process.env.PORT || 3000, function() {
