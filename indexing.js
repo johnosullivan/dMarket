@@ -15,8 +15,8 @@ const web3url = "http://localhost:8545";
 const ipfsbase = "http://127.0.0.1:8080/ipfs/";
 const mongoDB = 'mongodb://127.0.0.1/ipfs_index';
 
-const contract_address = "0x8cdaf0cd259887258bc13a92c0a6da92698644c0";
-const orders_address = "0xf12b5dd4ead5f743c6baa640b0216200e89b60da";
+const contract_address = "0x9fbda871d559710256a2502a2517b794b482db40";
+const orders_address = "0x2c2b9c9a4a25e24b174f26114e8926a9f2128fe4";
 
 const abi =  [{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"uint256"}],"name":"hashes","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"hash","type":"string"}],"name":"removeItem","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"hash","type":"string"}],"name":"listItem","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"paddress","type":"address"},{"indexed":false,"name":"ipfshash","type":"string"}],"name":"AddedListing","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"paddress","type":"address"},{"indexed":false,"name":"ipfshash","type":"string"}],"name":"DeactiveListing","type":"event"}];
 
