@@ -13,7 +13,7 @@ const privateKey = new Buffer('c87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4
 const publicKey = "0xfa5b6432308d45b54a1ce1373513fab77166436f";
 const web3url = "http://localhost:8545";
 const ipfsbase = "http://127.0.0.1:8080/ipfs/";
-const mongoDB = 'mongodb://127.0.0.1/ipfs_index';
+const mongoDB = 'mongodb://127.0.0.1/dMarket';
 
 const contract_address = "0x9fbda871d559710256a2502a2517b794b482db40";
 const orders_address = "0x2c2b9c9a4a25e24b174f26114e8926a9f2128fe4";
