@@ -86,15 +86,32 @@ export class Web3Provider {
   }
 
   setUser(address) {
+    console.log("dMarket -> setUser()");
+    // Resets the watching events
     if (this.tokenWatching !== undefined) { this.stopWatching(); }
     this.web3.eth.defaultAccount = address;
     this.paddress = address;
+    // Gets the token contract from the network
+    this.tokenContract = new this.web3.eth.Contract(this.abiProvider.TOKEN_ABI, this.configProvider.dMARK_Address);
+    console.log("TokenContract -> ", this.tokenContract);
 
-    var contract = this.web3.eth.contract(this.abiProvider.TOKEN_ABI);
-    this.tokenContract = contract.at(this.configProvider.dMARK_Address);
 
-    var transferEvent = this.tokenContract.Transfer();
-    var self = this;
+
+
+    this.tokenContract.events.Transfer({ fromBlock: 0, toBlock: "latest" }, function(error, event){ console.log("event -> ", event); })
+.on('data', function(event){
+    console.log(event); // same results as the optional callback above
+})
+.on('changed', function(event){
+    // remove event from local database
+})
+.on('error', console.error);
+
+// event output example
+
+
+
+    /*var self = this;
     this.tokenWatching = transferEvent.watch(function(error, result){
         if (!error) {
           if (self.paddress !== undefined) {
@@ -108,7 +125,9 @@ export class Web3Provider {
             }
           }
         }
-    });
+    });*/
+
+    // Checks the balance
     this.checkBalance();
   }
 
@@ -128,11 +147,14 @@ export class Web3Provider {
 
   // Gets the balance of the current the public in ether and tokens
   checkBalance() {
-    var balance = this.web3.eth.getBalance(this.paddress).c;
-    var contract = this.getdMarkContract();
-    var baldMark = contract.balanceOf(this.paddress).c;
-    this.ether = balance[0] / 10000;
-    this.dDT = baldMark[0];
+    // Gets the ether balance
+    this.web3.eth.getBalance(this.paddress).then((user_ether) => {
+      this.ether = (user_ether / 1000000000000000000).toFixed(4);
+    });
+    // Gets the token balance of the public user address
+    this.getdMarkContract().methods.balanceOf(this.paddress).call({from: this.paddress}).then((user_dmt) => {
+      this.dDT = user_dmt;
+    });
   }
 
   // Stops the filter for watching the token contract from listen for event triggers
