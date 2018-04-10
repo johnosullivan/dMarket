@@ -38,12 +38,13 @@ export class Web3Provider {
     this.lastName = "";
     this.email = "";
 
-    if (typeof this.web3 !== undefined) {
+    /*if (typeof this.web3 !== undefined) {
       this.web3accounts = new Web3Accounts(configProvider.ETH_URL);
       this.web3 = new Web3(new Web3.providers.HttpProvider(configProvider.ETH_URL));
     } else {
 
-    }
+    }*/
+    this.web3 = new Web3("ws://localhost:8545");
   }
 
   getTransactions(hash_array) {
@@ -96,36 +97,20 @@ export class Web3Provider {
     console.log("TokenContract -> ", this.tokenContract);
 
 
+    var self = this;
+    this.tokenContract.events.Transfer({ fromBlock: 0 },  function(error, event){ }).on('data', (log) => {
+      let { returnValues: { from, to, value }, blockNumber } = log
+      if (self.paddress == from) {
+        self.checkBalance();
+      }
+      if (self.paddress == to) {
+        self.checkBalance();
+      }
 
+      console.log("log -> ", log);
+    }).on('changed', (log) => {
 
-    this.tokenContract.events.Transfer({ fromBlock: 0, toBlock: "latest" }, function(error, event){ console.log("event -> ", event); })
-.on('data', function(event){
-    console.log(event); // same results as the optional callback above
-})
-.on('changed', function(event){
-    // remove event from local database
-})
-.on('error', console.error);
-
-// event output example
-
-
-
-    /*var self = this;
-    this.tokenWatching = transferEvent.watch(function(error, result){
-        if (!error) {
-          if (self.paddress !== undefined) {
-            var transactionArg = result.args;
-            var publicAddress = self.paddress.toLowerCase();
-            var from = transactionArg.from.toLowerCase();
-            var to = transactionArg.to.toLowerCase();
-            console.log("Transaction_Args: ",transactionArg);
-            if ((publicAddress === from) || (publicAddress === to)) {
-              self.checkBalance();
-            }
-          }
-        }
-    });*/
+    }).on('error', (log) => { })
 
     // Checks the balance
     this.checkBalance();

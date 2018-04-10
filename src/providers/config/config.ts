@@ -15,7 +15,7 @@ export class ConfigProvider {
   constructor() {
     this.ETH_URL = this._readString('ETH_URL', 'http://localhost:8545');
 
-    this.dMARK_Address = this._readString('dMARK_Address', '0x8cdaf0cd259887258bc13a92c0a6da92698644c0');
+    this.dMARK_Address = this._readString('dMARK_Address', '0x0b25cdb672e214acb36b153f2625df92236ab349');
     this.dUSER_Address = this._readString('dUSER_Address', '0x972942f5a240de0341ccd529c87e271402edce2c');
     this.dORDER_Address = this._readString('dORDER_Address', '0xf12b5dd4ead5f743c6baa640b0216200e89b60da');
 
