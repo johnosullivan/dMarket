@@ -87,16 +87,15 @@ export class Web3Provider {
   }
 
   setUser(address) {
-    console.log("dMarket -> setUser()");
+    this.configProvider.log("dMarket -> setUser()","");
     // Resets the watching events
     if (this.tokenWatching !== undefined) { this.stopWatching(); }
     this.web3.eth.defaultAccount = address;
     this.paddress = address;
     // Gets the token contract from the network
     this.tokenContract = new this.web3.eth.Contract(this.abiProvider.TOKEN_ABI, this.configProvider.dMARK_Address);
-    console.log("TokenContract -> ", this.tokenContract);
-
-
+    this.configProvider.log("TokenContract -> ", this.tokenContract);
+    // Gets a the current scope to -> self
     var self = this;
     this.tokenContract.events.Transfer({ fromBlock: 0 },  function(error, event){ }).on('data', (log) => {
       let { returnValues: { from, to, value }, blockNumber } = log
@@ -106,12 +105,7 @@ export class Web3Provider {
       if (self.paddress == to) {
         self.checkBalance();
       }
-
-      console.log("log -> ", log);
-    }).on('changed', (log) => {
-
-    }).on('error', (log) => { })
-
+    }).on('changed', (log) => { }).on('error', (log) => { })
     // Checks the balance
     this.checkBalance();
   }

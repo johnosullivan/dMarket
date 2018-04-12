@@ -1,0 +1,10 @@
+{
+  "db_URL":"mongodb://127.0.0.1/dMarket",
+  "index_address":"",
+  "ipfs_base":"http://127.0.0.1:8080/ipfs/",
+  "web3_url":"ws://localhost:8545",
+  "owner_address":"0x901473eE8ac77F0967aD3D0Ac2943d4f27668a7f",
+  "listing_address":"0xba8903aa18dddac66055a6ecdb2a9cf7d367b5b1",
+  "listing_abi":[{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"uint256"}],"name":"hashes","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"hash","type":"string"}],"name":"removeItem","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"hash","type":"string"}],"name":"listItem","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"paddress","type":"address"},{"indexed":false,"name":"ipfshash","type":"string"}],"name":"AddedListing","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"paddress","type":"address"},{"indexed":false,"name":"ipfshash","type":"string"}],"name":"DeactiveListing","type":"event"}],
+  "orders_abi":""
+}

@@ -1,7 +1,6 @@
-const fs = require('fs');
-const Web3 = require('web3');
-const Tx = require('ethereumjs-tx');
-
+var fs = require('fs');
+var Web3 = require('web3');
+var Tx = require('ethereumjs-tx');
 var bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
@@ -9,8 +8,64 @@ var http = require("http");
 var mongoose = require('mongoose');
 var cors = require('cors');
 
-const privateKey = new Buffer('c87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3', 'hex')
-const publicKey = "0xfa5b6432308d45b54a1ce1373513fab77166436f";
+// Gets the indexer config
+const configs = fs.readFileSync('indexer_config.json').toString();
+const cfl = JSON.parse(configs);
+const web3url = cfl["web3_url"];
+const ipfsbase = cfl["ipfs_base"];
+const mongoDB = cfl["db_URL"];
+
+// Contracts details
+const owner_address = cfl["owner_address"];
+const listing_abi = cfl["listing_abi"];
+const listing_address = cfl["listing_address"];
+
+// Creates a init of web3
+var web3 = new Web3(web3url);
+web3.eth.defaultAccount = owner_address;
+var listingContract = new web3.eth.Contract(listing_abi, listing_address);
+
+// Http client to get the contents on the ipfs listed items
+var HttpClient = function() {
+    this.get = function(uri, callback) {
+        // XMLHttpRequest Get Method
+        var request = new XMLHttpRequest();
+        // Fires once the state of the request changes
+        request.onreadystatechange = function() {
+            // If the request is of the right code fire the callback
+            if (request.readyState == 4 && request.status == 200) { callback(request.responseText); }
+        }
+        // Sets the param and sends the request
+        request.open("GET",uri,true);
+        request.send(null);
+    }
+}
+
+// Configs the express server
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Authorization,Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+// Sets the body parser for all HTTP requests
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+var server = http.createServer(app);
+
+
+
+
+
+
+
+// Listening for new listing on the contract
+listingContract.events.AddedListing({ fromBlock: 0 },  function(error, event){ }).on('data', (data) => {
+  console.log(data);
+}).on('changed', (log) => { }).on('error', (log) => { })
+
+
+
+/*
 const web3url = "http://localhost:8545";
 const ipfsbase = "http://127.0.0.1:8080/ipfs/";
 const mongoDB = 'mongodb://127.0.0.1/dMarket';
@@ -153,4 +208,4 @@ app.use('/api', router);
 
 server.listen(process.env.PORT || 3000, function() {
     console.log('Server listening on port: ', 3000);
-});
+});*/
