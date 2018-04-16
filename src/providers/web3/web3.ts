@@ -42,9 +42,10 @@ export class Web3Provider {
       this.web3accounts = new Web3Accounts(configProvider.ETH_URL);
       this.web3 = new Web3(new Web3.providers.HttpProvider(configProvider.ETH_URL));
     } else {
-
+a3bcb5a37abe81976ac4facdbb36e21db62e811b9c7f7ad0f99950a472583940
     }*/
-    this.web3 = new Web3("ws://localhost:8545");
+    //this.web3 = new Web3("ws://localhost:8545");
+    this.web3 = new Web3("https://rinkeby.infura.io/");
   }
 
   getTransactions(hash_array) {
@@ -96,7 +97,7 @@ export class Web3Provider {
     this.tokenContract = new this.web3.eth.Contract(this.abiProvider.TOKEN_ABI, this.configProvider.dMARK_Address);
     this.configProvider.log("TokenContract -> ", this.tokenContract);
     // Gets a the current scope to -> self
-    var self = this;
+    /*var self = this;
     this.tokenContract.events.Transfer({ fromBlock: 0 },  function(error, event){ }).on('data', (log) => {
       let { returnValues: { from, to, value }, blockNumber } = log
       if (self.paddress == from) {
@@ -105,7 +106,7 @@ export class Web3Provider {
       if (self.paddress == to) {
         self.checkBalance();
       }
-    }).on('changed', (log) => { }).on('error', (log) => { })
+    }).on('changed', (log) => { }).on('error', (log) => { })*/
     // Checks the balance
     this.checkBalance();
   }
@@ -131,9 +132,9 @@ export class Web3Provider {
       this.ether = (user_ether / 1000000000000000000).toFixed(4);
     });
     // Gets the token balance of the public user address
-    this.getdMarkContract().methods.balanceOf(this.paddress).call({from: this.paddress}).then((user_dmt) => {
-      this.dDT = user_dmt;
-    });
+    /*this.getdMarkContract().methods.balanceOf(this.paddress).call({from: this.paddress}).then((user_dmt) => {
+      this.dDT = (user_dmt / 1000000000000000000);
+    });*/
   }
 
   // Stops the filter for watching the token contract from listen for event triggers

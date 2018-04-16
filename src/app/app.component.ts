@@ -55,7 +55,7 @@ export class MyApp {
       console.log("Account: ", this.user);
     });
 
-    var self = this;
+    /*var self = this;
     this.storage.get('ipfs').then((ipfs) => {
       console.log("IPFS Hash: ", ipfs);
       if (ipfs == null) {
@@ -63,7 +63,7 @@ export class MyApp {
       } else {
         self.userProvider.getProfile(ipfs);
       }
-    });
+    });*/
 
     events.subscribe('user:new', (user, time) => {
       console.log('Public', user, 'at', time);

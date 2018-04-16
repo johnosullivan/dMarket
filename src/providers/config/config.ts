@@ -14,9 +14,9 @@ export class ConfigProvider {
 
   //TODO Need to add dot env plugin for dev/prod env variables
   constructor() {
-    this.ETH_URL = this._readString('ETH_URL', 'http://localhost:8545');
+    this.ETH_URL = this._readString('ETH_URL', 'https://rinkeby.infura.io/');
 
-    this.dMARK_Address = this._readString('dMARK_Address', '0x3149c4a79c962c5c1ec3c8404dcd7ba9800e571f');
+    this.dMARK_Address = this._readString('dMARK_Address', '0x748134c5CE12b12c4048bb4d2A4E3Cd6163D0618');
     this.dUSER_Address = this._readString('dUSER_Address', '0x972942f5a240de0341ccd529c87e271402edce2c');
     this.dORDER_Address = this._readString('dORDER_Address', '0xf12b5dd4ead5f743c6baa640b0216200e89b60da');
 
