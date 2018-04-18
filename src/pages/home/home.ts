@@ -68,6 +68,15 @@ export class HomePage {
 
   }
 
+  test() {
+    console.log("Test");
+
+
+
+
+
+  }
+
   cart() {
     let cartModal = this.modalCtrl.create(MyCartPage, { }, { enableBackdropDismiss: false });
     cartModal.present();
