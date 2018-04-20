@@ -14,8 +14,8 @@ import { ItemDetailsPage } from '../item-details/item-details';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CartProvider } from '../../providers/cart/cart';
 import { MyCartPage } from '../my-cart/my-cart';
+import { TransactionsPage } from '../transactions/transactions';
 
-import kjua from 'kjua';
 
 import ipfsAPI from 'ipfs-api';
 declare const Buffer;
@@ -116,7 +116,7 @@ export class HomePage {
 
 
 
-    this.web3Provider.getWeb3().version.getNetwork((err, netId) => {
+this.web3Provider.getWeb3().version.getNetwork((err, netId) => {
   switch (netId) {
     case "1":
       console.log('This is mainnet')
@@ -138,11 +138,33 @@ export class HomePage {
   }
 });
 
+
+var abi = [ { "constant": false, "inputs": [ { "name": "test", "type": "string" } ], "name": "Set", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "data", "outputs": [ { "name": "", "type": "string", "value": "hello" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "Get", "outputs": [ { "name": "", "type": "string", "value": "hello" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" } ];
+var mycontract = this.web3Provider.getWeb3().eth.contract(abi);
+
+var con_address = "0x12dc8f428f2ac71EaE8fbfb36FdBA9C5db34e6dB";
+var contest = mycontract.at(con_address);
+
+contest.Set("why is metamask not support web3.js 1.0 :(", (error, result) => (console.log(result)));
+
+//var getData = contest.Set.getData("john was here");
+
+//this.web3Provider.getWeb3().eth.sendTransaction({to:con_address, from:this.web3Provider.paddress, data: getData});
+
+
+console.log(contest);
+
+
   }
 
 
   cart() {
     let cartModal = this.modalCtrl.create(MyCartPage, { }, { enableBackdropDismiss: false });
+    cartModal.present();
+  }
+
+  transactions() {
+    let cartModal = this.modalCtrl.create(TransactionsPage, { }, { enableBackdropDismiss: false });
     cartModal.present();
   }
 

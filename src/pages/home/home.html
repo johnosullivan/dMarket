@@ -5,9 +5,12 @@
     </button>
     <ion-title>dMarket</ion-title>
    <ion-buttons end>
-            <button ion-button icon-only (click)="cart()">
-              {{ cartProvider['mycart'].length }} <ion-icon name="cart"></ion-icon>
-            </button>
+     <button ion-button icon-only (click)="transactions()">
+       <ion-icon name="list"></ion-icon>
+     </button>
+     <button ion-button icon-only (click)="cart()">
+       {{ cartProvider['mycart'].length }} <ion-icon name="cart"></ion-icon>
+     </button>
           </ion-buttons>
   </ion-navbar>
 

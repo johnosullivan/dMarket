@@ -30,6 +30,8 @@ import { MyCartPage } from '../pages/my-cart/my-cart';
 import { MySettingsPage } from '../pages/my-settings/my-settings';
 import { OrdersPage } from '../pages/orders/orders';
 
+import { TransactionsPage } from '../pages/transactions/transactions';
+
 /*
 android -> on a device running Android.
 cordova ->	on a device running Cordova.
@@ -57,7 +59,8 @@ windows -> on a device running Windows.
     ItemDetailsPage,
     MyCartPage,
     MySettingsPage,
-    OrdersPage
+    OrdersPage,
+    TransactionsPage
   ],
   imports: [
     BrowserModule,
@@ -79,7 +82,8 @@ windows -> on a device running Windows.
     ItemDetailsPage,
     MyCartPage,
     MySettingsPage,
-    OrdersPage
+    OrdersPage,
+    TransactionsPage
   ],
   providers: [
     StatusBar,
