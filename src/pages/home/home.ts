@@ -112,15 +112,11 @@ export class HomePage {
     })
     */
 
-/*
 
-  var window = this.windowRef.nativeWindow;
-  var Web3 = window.Web3;
-  var web3 = window.web3;
 
-  web3 = new Web3(web3.currentProvider);
 
-    web3.version.getNetwork((err, netId) => {
+
+    this.web3Provider.getWeb3().version.getNetwork((err, netId) => {
   switch (netId) {
     case "1":
       console.log('This is mainnet')
@@ -141,10 +137,6 @@ export class HomePage {
       console.log('This is an unknown network.')
   }
 });
-
-  console.log(web3.eth.defaultAccount);
-*/
-
 
   }
 
