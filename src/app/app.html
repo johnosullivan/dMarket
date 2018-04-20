@@ -9,20 +9,19 @@
     <div text-center>
       <ngx-qrcode [qrc-value]="qr"></ngx-qrcode>
     </div>
+
+
+
     <div text-center>
-      <!--<h5 style="margin: 0px;"><b>{{web3Provider.firstName}} {{web3Provider.lastName}}</b></h5>
-      <br>
-      <span style="">{{web3Provider.email}}</span>
-      <br>
-      <span style="">{{web3Provider.paddress}}</span>-->
+      <div text-center padding>
+        <span style="">{{web3Provider.paddress}}</span>
+      </div>
     </div>
     <div text-center padding>
       <img style="vertical-align:middle" src="assets/eth.png" width="30px" height="30px">
       <span style="">{{web3Provider.ether}}</span>
       <img style="vertical-align:middle" src="assets/dth.png" width="30px" height="30px">
       <span style="">{{web3Provider.dDT}}</span>
-      <!--br><br>
-      <small>{{web3Provider.paddress}}</small>-->
     </div>
     <br>
     <ion-list>
@@ -37,12 +36,17 @@
       </button>
     </ion-list>
 
+
+<div text-center>
+
+<button ion-button color="uport" (click)="uport()">Connect with your uPort ID</button>
+</div>
     <ion-footer no-border>
       <ion-toolbar no-border-top>
     <ion-buttons start>
-      <button menuClose ion-button icon-only color="nav" (click)="accounts()">
+    <!--  <button menuClose ion-button icon-only color="nav" (click)="accounts()">
         <ion-icon name="contact"></ion-icon> <small>Switch Accounts</small>
-      </button>
+      </button> -->
     </ion-buttons>
     <ion-title></ion-title>
   </ion-toolbar>

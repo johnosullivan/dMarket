@@ -4,19 +4,25 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>dMarket</ion-title>
-    <ion-buttons end>
+   <ion-buttons end>
             <button ion-button icon-only (click)="cart()">
               {{ cartProvider['mycart'].length }} <ion-icon name="cart"></ion-icon>
             </button>
           </ion-buttons>
   </ion-navbar>
 
-<ion-toolbar no-border-top color="nav">
+<!-- <ion-toolbar no-border-top color="nav">
    <ion-searchbar [(ngModel)]="search" placeholder="Search" (search)="searchByKeyword($event)" [showCancelButton]="true" (ionCancel)="onCancel($event)"></ion-searchbar>
-</ion-toolbar>
+</ion-toolbar> -->
 
 </ion-header>
+
+
 <ion-content style="background-color:#eee;">
+
+  <div *ngIf="isuport">
+    <ngx-qrcode [qrc-value]="qr"></ngx-qrcode>
+  </div>
 
   <ion-list>
     <button ion-item *ngFor="let item of items" (click)="details(item)">
@@ -29,6 +35,7 @@
     </button>
   </ion-list>
 
+  <!--<button ion-button color="dark" (click)="test()">Test</button>-->
 
 <!--
   <button ion-button color="dark" (click)="transHistory()">TXS_HISTORY</button>

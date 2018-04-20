@@ -10,7 +10,7 @@ import { AddUserPage } from '../pages/add-user/add-user';
 import { SendMarkPage } from '../pages/send-mark/send-mark';
 import { UserProvider } from '../providers/user/user';
 import { ListingPage } from '../pages/listing/listing';
-
+import { WindowRef } from './window';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { MySettingsPage } from '../pages/my-settings/my-settings';
 import { OrdersPage } from '../pages/orders/orders';
@@ -34,6 +34,7 @@ export class MyApp {
     public web3Provider:Web3Provider,
     public platform: Platform,
     public statusBar: StatusBar,
+    public windowRef:WindowRef,
     public splashScreen: SplashScreen
   ) {
 
@@ -47,14 +48,15 @@ export class MyApp {
       { title: 'Settings', component: MySettingsPage }
     ];
 
-    this.storage.get('account').then((account) => {
+    /*this.storage.get('account').then((account) => {
       this.user = account;
       this.web3Provider.setUser(this.user.address);
       this.web3Provider.setPrivateDebug(this.user.privateKey);
       this.qr = this.user.address;
       console.log("Account: ", this.user);
-    });
-
+    });*/
+    this.qr = "0x1C1e61ec8c521C2FB88f173F7C47FE525e7A8a04";
+    this.web3Provider.setUser("");
     /*var self = this;
     this.storage.get('ipfs').then((ipfs) => {
       console.log("IPFS Hash: ", ipfs);
@@ -70,6 +72,36 @@ export class MyApp {
       let profileModal = this.modalCtrl.create(AddUserPage, { publicKey: user });
       profileModal.present();
     });
+
+  }
+
+  uport() {
+    console.log("Test");
+
+    var window = this.windowRef.nativeWindow;
+    var uportconnect = window.uportconnect;
+
+    const uport = new uportconnect.Connect('dMarket', {
+      clientId: '2ouAjchR4wKPxxiLqE6AEhYPRF1sADw2uE5',
+      network: 'rinkeby',
+      signer: uportconnect.SimpleSigner('4704ff3ba69c877aed124c15866d47177e1613efd1061c9bfb938384c9e810e4')
+    })
+
+    console.log(window);
+
+    uport.requestCredentials({
+      requested: ['name', 'avatar', 'phone', 'country'],
+      notifcations: true },
+      (uri) => {
+
+        this.qr = uri;
+
+      }).then((userProfile) => {
+
+        console.log(userProfile);
+        // Do something after they have disclosed credentials
+    })
+
 
   }
 

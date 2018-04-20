@@ -7,6 +7,8 @@ import Web3Accounts from 'web3-eth-accounts';
 import { ConfigProvider } from '../config/config';
 import { ABIProvider } from './abi';
 
+import { WindowRef } from '../../app/window';
+
 @Injectable()
 export class Web3Provider {
 
@@ -27,12 +29,12 @@ export class Web3Provider {
   lastName:any;
   email:any;
 
-  constructor(public events: Events,public configProvider:ConfigProvider,public abiProvider:ABIProvider) {
+  constructor(public windowRef:WindowRef,public events: Events,public configProvider:ConfigProvider,public abiProvider:ABIProvider) {
 
     this.dDT = 0;
     this.ether = 0;
     this.paddress = "";
-    this.web3 = new Web3();
+    //this.web3 = new Web3();
 
     this.firstName = "";
     this.lastName = "";
@@ -45,7 +47,16 @@ export class Web3Provider {
 a3bcb5a37abe81976ac4facdbb36e21db62e811b9c7f7ad0f99950a472583940
     }*/
     //this.web3 = new Web3("ws://localhost:8545");
-    this.web3 = new Web3("https://rinkeby.infura.io/");
+    //this.web3 = new Web3("https://rinkeby.infura.io/");
+
+    var window = this.windowRef.nativeWindow;
+    var Web3 = window["Web3"];
+    var web3 = window["web3"];
+
+    this.web3 = new Web3(web3.currentProvider);
+
+    this.paddress = this.web3.eth.defaultAccount;
+
   }
 
   getTransactions(hash_array) {
@@ -90,12 +101,12 @@ a3bcb5a37abe81976ac4facdbb36e21db62e811b9c7f7ad0f99950a472583940
   setUser(address) {
     this.configProvider.log("dMarket -> setUser()","");
     // Resets the watching events
-    if (this.tokenWatching !== undefined) { this.stopWatching(); }
-    this.web3.eth.defaultAccount = address;
-    this.paddress = address;
+    //if (this.tokenWatching !== undefined) { this.stopWatching(); }
+    //this.web3.eth.defaultAccount = address;
+    //this.paddress = address;
     // Gets the token contract from the network
-    this.tokenContract = new this.web3.eth.Contract(this.abiProvider.TOKEN_ABI, this.configProvider.dMARK_Address);
-    this.configProvider.log("TokenContract -> ", this.tokenContract);
+    //this.tokenContract = new this.web3.eth.Contract(this.abiProvider.TOKEN_ABI, this.configProvider.dMARK_Address);
+    //this.configProvider.log("TokenContract -> ", this.tokenContract);
     // Gets a the current scope to -> self
     /*var self = this;
     this.tokenContract.events.Transfer({ fromBlock: 0 },  function(error, event){ }).on('data', (log) => {
@@ -128,9 +139,18 @@ a3bcb5a37abe81976ac4facdbb36e21db62e811b9c7f7ad0f99950a472583940
   // Gets the balance of the current the public in ether and tokens
   checkBalance() {
     // Gets the ether balance
-    this.web3.eth.getBalance(this.paddress).then((user_ether) => {
+    /*this.web3.eth.getBalance(this.paddress).then((user_ether) => {
       this.ether = (user_ether / 1000000000000000000).toFixed(4);
+    });*/
+    var self = this;
+    this.web3.eth.getBalance(this.web3.eth.defaultAccount, function(err, balance) {
+      if (err === null) {
+        console.log(balance.c[0]);
+        self.ether = (balance.c[0] / 10000).toFixed(3);
+      }
     });
+
+
     // Gets the token balance of the public user address
     /*this.getdMarkContract().methods.balanceOf(this.paddress).call({from: this.paddress}).then((user_dmt) => {
       this.dDT = (user_dmt / 1000000000000000000);

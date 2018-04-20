@@ -41,6 +41,7 @@
     "ios-deploy": "^1.9.2",
     "ipfs": "^0.27.7",
     "ipfs-api": "^17.5.0",
+    "kjua": "^0.1.2",
     "mongoose": "^5.0.14",
     "ngx-qrcode2": "0.0.5",
     "phonegap-plugin-barcodescanner": "^7.1.1",

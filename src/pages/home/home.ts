@@ -11,13 +11,17 @@ import { HttpClient } from '@angular/common/http';
 import { ConfigProvider } from '../../providers/config/config';
 import { IpfsProvider } from '../../providers/ipfs/ipfs';
 import { ItemDetailsPage } from '../item-details/item-details';
-
+import { DomSanitizer } from '@angular/platform-browser';
 import { CartProvider } from '../../providers/cart/cart';
 import { MyCartPage } from '../my-cart/my-cart';
 
+import kjua from 'kjua';
 
 import ipfsAPI from 'ipfs-api';
 declare const Buffer;
+
+
+import { Connect, SimpleSigner } from 'uport-connect'
 
 @Component({
   selector: 'page-home',
@@ -38,6 +42,10 @@ export class HomePage {
 
   items:any;
 
+  account:any;
+  isuport:any;
+  qr:any;
+
   constructor(
     public userProvider:UserProvider,
     private storage: Storage,
@@ -49,7 +57,8 @@ export class HomePage {
     public configProvider:ConfigProvider,
     public http:HttpClient,
     public ipfsProvider:IpfsProvider,
-    public cartProvider:CartProvider
+    public cartProvider:CartProvider,
+    public _DomSanitizer: DomSanitizer
   ) {
     this.balance = "";
     this.tempuser = "";
@@ -62,6 +71,10 @@ export class HomePage {
     this.search = '';
 
     this.items = [];
+
+    this.isuport = false;
+    this.account = '';
+
   }
 
   ionViewWillLeave() {
@@ -69,13 +82,72 @@ export class HomePage {
   }
 
   test() {
-    console.log("Test");
+    /*console.log("Test");
+
+    var window = this.windowRef.nativeWindow;
+    var uportconnect = window.uportconnect;
+
+    const uport = new uportconnect.Connect('dMarket', {
+      clientId: '2ouAjchR4wKPxxiLqE6AEhYPRF1sADw2uE5',
+      network: 'rinkeby',
+      signer: uportconnect.SimpleSigner('4704ff3ba69c877aed124c15866d47177e1613efd1061c9bfb938384c9e810e4')
+    })
+
+    console.log(window);
+
+    this.isuport = true;
+
+    uport.requestCredentials({
+      requested: ['name', 'avatar', 'phone', 'country'],
+      notifcations: true },
+      (uri) => {
 
 
+        this.qr = uri;
 
+      }).then((userProfile) => {
+
+        console.log(userProfile);
+        // Do something after they have disclosed credentials
+    })
+    */
+
+/*
+
+  var window = this.windowRef.nativeWindow;
+  var Web3 = window.Web3;
+  var web3 = window.web3;
+
+  web3 = new Web3(web3.currentProvider);
+
+    web3.version.getNetwork((err, netId) => {
+  switch (netId) {
+    case "1":
+      console.log('This is mainnet')
+      break
+    case "2":
+      console.log('This is the deprecated Morden test network.')
+      break
+    case "3":
+      console.log('This is the ropsten test network.')
+      break
+    case "4":
+      console.log('This is the Rinkeby test network.')
+      break
+    case "42":
+      console.log('This is the Kovan test network.')
+      break
+    default:
+      console.log('This is an unknown network.')
+  }
+});
+
+  console.log(web3.eth.defaultAccount);
+*/
 
 
   }
+
 
   cart() {
     let cartModal = this.modalCtrl.create(MyCartPage, { }, { enableBackdropDismiss: false });
