@@ -21,7 +21,12 @@
 </ion-header>
 
 
+
 <ion-content style="background-color:#eee;">
+
+
+
+
 
   <div *ngIf="isuport">
     <ngx-qrcode [qrc-value]="qr"></ngx-qrcode>
@@ -38,9 +43,10 @@
     </button>
   </ion-list>
 
-  <button ion-button color="dark" (click)="test()">Test</button>
-
 <!--
+
+<button ion-button color="dark" (click)="test()">Test</button>
+
   <button ion-button color="dark" (click)="transHistory()">TXS_HISTORY</button>
   <button ion-button color="dark" (click)="add()">Add</button>
   <br><br>
