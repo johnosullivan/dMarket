@@ -21,7 +21,9 @@ import ipfsAPI from 'ipfs-api';
 declare const Buffer;
 
 
-import { Connect, SimpleSigner } from 'uport-connect'
+import CryptoJS from 'crypto-js';
+
+import { Connect, SimpleSigner } from 'uport-connect';
 
 @Component({
   selector: 'page-home',
@@ -113,7 +115,15 @@ export class HomePage {
     */
 
 
+    // Encrypt
+    //var ciphertext = CryptoJS.AES.encrypt('my message', 'secret key 123');
+    //console.log(ciphertext.toString());
 
+    // Decrypt
+    //var bytes  = CryptoJS.AES.decrypt(ciphertext.toString(), 'secret key 123');
+    //var plaintext = bytes.toString(CryptoJS.enc.Utf8);
+
+    //console.log(plaintext);
 
 
 this.web3Provider.getWeb3().version.getNetwork((err, netId) => {
@@ -138,7 +148,7 @@ this.web3Provider.getWeb3().version.getNetwork((err, netId) => {
   }
 });
 
-
+/*
 var abi = [ { "constant": false, "inputs": [ { "name": "test", "type": "string" } ], "name": "Set", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "data", "outputs": [ { "name": "", "type": "string", "value": "hello" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "Get", "outputs": [ { "name": "", "type": "string", "value": "hello" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" } ];
 var mycontract = this.web3Provider.getWeb3().eth.contract(abi);
 
@@ -146,13 +156,13 @@ var con_address = "0x12dc8f428f2ac71EaE8fbfb36FdBA9C5db34e6dB";
 var contest = mycontract.at(con_address);
 
 contest.Set("why is metamask not support web3.js 1.0 :(", (error, result) => (console.log(result)));
-
+*/
 //var getData = contest.Set.getData("john was here");
 
 //this.web3Provider.getWeb3().eth.sendTransaction({to:con_address, from:this.web3Provider.paddress, data: getData});
 
 
-console.log(contest);
+//console.log(contest);
 
 
   }

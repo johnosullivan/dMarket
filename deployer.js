@@ -2,7 +2,6 @@ const fs = require('fs');
 const solc = require('solc');
 const Web3 = require('web3');
 const Tx = require('ethereumjs-tx');
-
 var prompt = require('prompt');
 
 prompt.start();
