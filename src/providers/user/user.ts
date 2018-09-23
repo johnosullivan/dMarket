@@ -5,6 +5,8 @@ import { IpfsProvider } from '../ipfs/ipfs';
 import { Web3Provider } from '../../providers/web3/web3';
 import { Storage } from '@ionic/storage';
 
+import aesjs from "aes-js";
+
 @Injectable()
 export class UserProvider {
 
